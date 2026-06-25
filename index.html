@@ -51,7 +51,7 @@
   }
 
   .nav-logo img {
-    height: 20px;
+    height: 14px; /* Diminuído de 20px para 14px */
     width: auto;
     display: block;
   }
@@ -207,7 +207,7 @@
   .sobre-video-container {
     position: relative;
     width: 100%;
-    padding-bottom: 133.33%; /* Mantém a proporção vertical 3:4 original */
+    padding-bottom: 133.33%;
     height: 0;
     overflow: hidden;
     background: var(--surface2);
@@ -324,23 +324,6 @@
 
   .projeto-card:hover img { transform: scale(1.04); }
 
-  .projeto-placeholder {
-    width: 100%;
-    height: 100%;
-    min-height: 280px;
-    background: var(--surface2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    gap: 0.75rem;
-    color: var(--muted);
-    font-size: 0.75rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    font-family: 'Poppins', sans-serif;
-  }
-
   .projeto-overlay {
     position: absolute;
     inset: 0;
@@ -452,8 +435,6 @@
     flex-direction: column;
     gap: 1.5rem;
   }
-
-  .apresentacao-item {}
 
   .apresentacao-titulo {
     font-family: 'Ubuntu', sans-serif;
@@ -643,7 +624,11 @@
     font-size: 0.78rem;
   }
 
-  footer img { height: 16px; width: auto; opacity: 0.5; }
+  footer img { 
+    height: 12px; /* Diminuído de 16px para 12px */
+    width: auto; 
+    opacity: 0.5; 
+  }
 
   /* RESPONSIVE */
   @media (max-width: 900px) {
@@ -652,7 +637,7 @@
     #hero { padding: 0 2rem 4rem; }
     section { padding: 4rem 2rem; }
     #sobre { grid-template-columns: 1fr; gap: 3rem; }
-    .sobre-video-container { max-height: 450px; padding-bottom: 56.25%; /* Ajusta proporção para widescreen em telas menores se necessário */ }
+    .sobre-video-container { max-height: 450px; padding-bottom: 56.25%; }
     #habilidades { grid-template-columns: 1fr; gap: 3rem; }
     .materiais-grid { grid-template-columns: 1fr; }
     .grid-projetos { grid-template-columns: 1fr 1fr; }
@@ -682,7 +667,7 @@
   <ul class="nav-links">
     <li><a href="#sobre">Sobre</a></li>
     <li><a href="#projetos">Projetos</a></li>
-    <li><a href="#materiais">Materials</a></li>
+    <li><a href="#materiais">Materiais</a></li>
     <li><a href="#habilidades">Habilidades</a></li>
     <li><a href="#contato">Contato</a></li>
   </ul>
