@@ -51,11 +51,11 @@
   }
 
   .nav-logo img {
-    height: 14px; /* Diminuído de 20px para 14px */
-    width: auto;
-    display: block;
-  }
-
+  height: 14px;
+  width: auto;
+  max-width: 120px; /* Isso impede que ela se espalhe para os lados se a imagem original for muito larga */
+  display: block;
+}
   .nav-links {
     display: flex;
     gap: 2rem;
