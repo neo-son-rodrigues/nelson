@@ -204,35 +204,24 @@
     align-items: center;
   }
 
-  .sobre-foto {
-    aspect-ratio: 3/4;
+  .sobre-video-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 133.33%; /* Mantém a proporção vertical 3:4 original */
+    height: 0;
+    overflow: hidden;
     background: var(--surface2);
     border-radius: 2px;
-    overflow: hidden;
+    border: 1px solid var(--border);
   }
 
-  .sobre-foto img {
+  .sobre-video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
-  .sobre-foto-placeholder {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    color: var(--muted);
-    font-size: 0.8rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    text-align: center;
-    padding: 2rem;
-    font-family: 'Poppins', sans-serif;
+    border: none;
   }
 
   .sobre-text p {
@@ -315,6 +304,9 @@
     overflow: hidden;
     cursor: pointer;
     aspect-ratio: 4/3;
+    display: block;
+    text-decoration: none;
+    color: inherit;
   }
 
   .projeto-card:first-child {
@@ -501,25 +493,6 @@
     border: none;
   }
 
-  .apresentacao-placeholder {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
-    color: var(--muted);
-    font-family: 'Poppins', sans-serif;
-    font-size: 0.75rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    text-align: center;
-    padding: 1rem;
-  }
-
-  .apresentacao-placeholder svg { opacity: 0.2; }
-
   /* HABILIDADES */
   #habilidades {
     border-top: 1px solid var(--border);
@@ -679,7 +652,7 @@
     #hero { padding: 0 2rem 4rem; }
     section { padding: 4rem 2rem; }
     #sobre { grid-template-columns: 1fr; gap: 3rem; }
-    .sobre-foto { max-height: 340px; }
+    .sobre-video-container { max-height: 450px; padding-bottom: 56.25%; /* Ajusta proporção para widescreen em telas menores se necessário */ }
     #habilidades { grid-template-columns: 1fr; gap: 3rem; }
     .materiais-grid { grid-template-columns: 1fr; }
     .grid-projetos { grid-template-columns: 1fr 1fr; }
@@ -709,7 +682,7 @@
   <ul class="nav-links">
     <li><a href="#sobre">Sobre</a></li>
     <li><a href="#projetos">Projetos</a></li>
-    <li><a href="#materiais">Materiais</a></li>
+    <li><a href="#materiais">Materials</a></li>
     <li><a href="#habilidades">Habilidades</a></li>
     <li><a href="#contato">Contato</a></li>
   </ul>
@@ -727,14 +700,8 @@
 
 <!-- SOBRE -->
 <section id="sobre">
-  <div class="sobre-foto">
-    <!-- Substitua pela sua foto: <img src="foto.jpg" alt="Nelson"> -->
-    <div class="sobre-foto-placeholder">
-      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.2">
-        <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
-      </svg>
-      Adicione sua foto aqui
-    </div>
+  <div class="sobre-video-container">
+    <iframe src="https://drive.google.com/file/d/1R1z6wpipp77nvnz0bgg9lW0u1tXgYrOo/preview" allow="autoplay" allowfullscreen></iframe>
   </div>
 
   <div class="sobre-text">
@@ -775,61 +742,50 @@
   </div>
 
   <div class="grid-projetos">
-    <div class="projeto-card">
-      <!-- <img src="projetos/projeto1.jpg" alt="Projeto destaque"> -->
-      <div class="projeto-placeholder" style="min-height:400px;">
-        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-        Imagem do projeto
-      </div>
+    <!-- Imagem 1 -->
+    <a href="https://neorodrigues.myportfolio.com/gv-solucoes-financeiras" target="_blank" class="projeto-card">
+      <img src="imagem1.jpg" alt="GV Soluções Financeiras">
       <div class="projeto-overlay">
         <span class="projeto-categoria">Identidade Visual</span>
-        <span class="projeto-nome">Nome do projeto em destaque</span>
+        <span class="projeto-nome">GV Soluções Financeiras</span>
       </div>
-    </div>
+    </a>
 
-    <div class="projeto-card">
-      <div class="projeto-placeholder">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-        Imagem do projeto
-      </div>
+    <!-- Imagem 2 -->
+    <a href="https://neorodrigues.myportfolio.com/animacoes" target="_blank" class="projeto-card">
+      <img src="imagem2.jpg" alt="Animações">
       <div class="projeto-overlay">
         <span class="projeto-categoria">Motion Design</span>
-        <span class="projeto-nome">Nome do projeto</span>
+        <span class="projeto-nome">Animações</span>
       </div>
-    </div>
+    </a>
 
-    <div class="projeto-card">
-      <div class="projeto-placeholder">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-        Imagem do projeto
-      </div>
+    <!-- Imagem 3 -->
+    <a href="https://neppo.com.br/neppo-ia/" target="_blank" class="projeto-card">
+      <img src="imagem3.jpg" alt="Landing Page Atendimento com IA">
       <div class="projeto-overlay">
         <span class="projeto-categoria">Web Design</span>
-        <span class="projeto-nome">Nome do projeto</span>
+        <span class="projeto-nome">Landing Page Atendimento com IA</span>
       </div>
-    </div>
+    </a>
 
-    <div class="projeto-card">
-      <div class="projeto-placeholder">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-        Imagem do projeto
-      </div>
+    <!-- Imagem 4 -->
+    <a href="https://neorodrigues.myportfolio.com/black-friday-neppo-2024" target="_blank" class="projeto-card">
+      <img src="imagem4.jpg" alt="Black Friday 2024">
       <div class="projeto-overlay">
         <span class="projeto-categoria">Campanha Digital</span>
-        <span class="projeto-nome">Nome do projeto</span>
+        <span class="projeto-nome">Black Friday 2024</span>
       </div>
-    </div>
+    </a>
 
-    <div class="projeto-card">
-      <div class="projeto-placeholder">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-        Imagem do projeto
-      </div>
+    <!-- Imagem 5 -->
+    <a href="https://neorodrigues.myportfolio.com/comunicacao-interna-neppo" target="_blank" class="projeto-card">
+      <img src="imagem5.jpg" alt="Comunicação Interna Neppo">
       <div class="projeto-overlay">
         <span class="projeto-categoria">Branding</span>
-        <span class="projeto-nome">Nome do projeto</span>
+        <span class="projeto-nome">Comunicação Interna Neppo</span>
       </div>
-    </div>
+    </a>
   </div>
 </section>
 
@@ -845,11 +801,10 @@
       <h3>E-books para download</h3>
       <div class="ebook-list">
 
-        <!-- Repita este bloco para cada e-book -->
         <a href="ebooks/ebook1.pdf" download class="ebook-item">
           <div class="ebook-info">
-            <div class="ebook-titulo">Título do e-book</div>
-            <div class="ebook-desc">Breve descrição do conteúdo</div>
+            <div class="ebook-titulo">WhatsApp no processo comercial</div>
+            <div class="ebook-desc">Meetime ou Neppo</div>
           </div>
           <div class="ebook-dl">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
@@ -858,8 +813,8 @@
 
         <a href="ebooks/ebook2.pdf" download class="ebook-item">
           <div class="ebook-info">
-            <div class="ebook-titulo">Título do e-book</div>
-            <div class="ebook-desc">Breve descrição do conteúdo</div>
+            <div class="ebook-titulo">Guia para resgatar leads perdidos</div>
+            <div class="ebook-desc">Como transformar "nãos" em vendas</div>
           </div>
           <div class="ebook-dl">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
@@ -868,8 +823,8 @@
 
         <a href="ebooks/ebook3.pdf" download class="ebook-item">
           <div class="ebook-info">
-            <div class="ebook-titulo">Título do e-book</div>
-            <div class="ebook-desc">Breve descrição do conteúdo</div>
+            <div class="ebook-titulo">Book de Cultura Neppo</div>
+            <div class="ebook-desc">Entenda a Cultura Open to the New!</div>
           </div>
           <div class="ebook-dl">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
@@ -884,38 +839,23 @@
       <h3>Apresentações</h3>
       <div class="apresentacoes-list">
 
-        <!-- Cole a URL de embed do Google Slides ou Canva no src do iframe -->
         <div class="apresentacao-item">
           <div class="apresentacao-titulo">
-            Título da apresentação
+            Apresentação Webinar: Novas regras do WhatsApp
             <span>Google Slides</span>
           </div>
           <div class="apresentacao-embed">
-            <!-- Google Slides: Arquivo > Publicar na web > Incorporar > copie o src do iframe -->
-            <!-- Canva: Compartilhar > Incorporar > copie o src do iframe -->
-            <div class="apresentacao-placeholder">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-              Cole o iframe da apresentação aqui
-            </div>
-            <!-- Exemplo Google Slides:
-            <iframe src="https://docs.google.com/presentation/d/SEU_ID/embed?start=false&loop=false" allowfullscreen></iframe>
-            -->
-            <!-- Exemplo Canva:
-            <iframe src="https://www.canva.com/design/SEU_ID/view?embed" allowfullscreen></iframe>
-            -->
+            <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vTPnWR9rBO9SU5qJoYfHx0fzMgHtTmqk-jyxJZiMhe0DchVOFSv1FZbl7SM9g6lEw/pubembed?start=false&loop=false&delayms=3000" allowfullscreen="true"></iframe>
           </div>
         </div>
 
         <div class="apresentacao-item">
           <div class="apresentacao-titulo">
-            Título da apresentação
-            <span>Canva</span>
+            Refresh Marca cVortex
+            <span>Google Slides</span>
           </div>
           <div class="apresentacao-embed">
-            <div class="apresentacao-placeholder">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-              Cole o iframe da apresentação aqui
-            </div>
+            <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vRZFZfTcNC_G36KybFKh0_AbqCVVTYgk9dqfq3tHcbne6KzU_tkwDG_rIiF2AE8XcQBQBuZc_3nyLDN/pubembed?start=false&loop=false&delayms=3000" allowfullscreen="true"></iframe>
           </div>
         </div>
 
@@ -947,8 +887,7 @@
     <div class="skill-group">
       <h4>Marketing</h4>
       <ul class="skill-list">
-        <li>Meta Ads</li>
-        <li>Google Ads</li>
+        <li>Automações de Marketing</li>
         <li>GA4 & Analytics</li>
         <li>E-mail Marketing</li>
         <li>Campanhas Digitais</li>
@@ -984,9 +923,9 @@
   <p class="contato-sub">Aberto a oportunidades CLT e PJ, presencial em Uberlândia e remoto.</p>
   <a href="mailto:seuemail@email.com" class="email-cta">Enviar e-mail →</a>
   <div class="contato-links">
-    <a href="https://linkedin.com/in/seu-usuario" target="_blank" class="contato-link">LinkedIn ↗</a>
-    <a href="https://behance.net/seu-usuario" target="_blank" class="contato-link">Behance ↗</a>
-    <a href="https://wa.me/5534999999999" target="_blank" class="contato-link">WhatsApp ↗</a>
+    <a href="https://www.linkedin.com/in/neorodrigues/" target="_blank" class="contato-link">LinkedIn ↗</a>
+    <a href="https://neorodrigues.myportfolio.com/" target="_blank" class="contato-link">Portfólio ↗</a>
+    <a href="https://wa.me/5534991719807" target="_blank" class="contato-link">WhatsApp ↗</a>
   </div>
 </section>
 
