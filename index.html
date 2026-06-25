@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nelson | Designer Gráfico & Marketing</title>
 
-<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+<!-- Adicionado o Favicon do site -->
+<link rel="shortcut icon" href="avicon.ico" type="image/x-icon">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -55,9 +56,9 @@
   }
 
   .nav-logo img {
-    height: 14px !important;
+    height: 50px !important; /* Ajustado para 50px de altura */
     width: auto;
-    max-width: 120px;
+    max-width: 250px; /* Aumentado o limite de largura proporcionalmente */
     display: block;
   }
 
@@ -85,7 +86,7 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    padding: 100px 4rem 5rem; /* Espaço no topo para compensar o menu fixo */
+    padding: 140px 4rem 5rem; /* Aumentado para compensar a logo maior no menu fixo */
     position: relative;
     overflow: hidden;
   }
@@ -639,7 +640,7 @@
   @media (max-width: 900px) {
     nav { padding: 1rem 2rem; }
     nav .nav-links { display: none; }
-    #hero { padding: 100px 2rem 4rem; } 
+    #hero { padding: 140px 2rem 4rem; } 
     section { padding: 4rem 2rem; }
     #sobre { grid-template-columns: 1fr; gap: 3rem; }
     .sobre-video-container { max-height: 450px; padding-bottom: 56.25%; }
@@ -667,7 +668,7 @@
 
 <nav>
   <a href="#hero">
-    <img src="logo-1.png" alt="Nelson" class="nav-logo" height="14">
+    <img src="logo-1.png" alt="Nelson" class="nav-logo" height="50">
   </a>
   <ul class="nav-links">
     <li><a href="#sobre">Sobre</a></li>
@@ -678,6 +679,7 @@
   </ul>
 </nav>
 
+<!-- HERO -->
 <section id="hero">
   <div class="hero-bg"></div>
   <p class="hero-tag">Designer Gráfico & Analista de Marketing · Uberlândia, MG</p>
@@ -687,6 +689,7 @@
   <span class="hero-scroll">Scroll</span>
 </section>
 
+<!-- SOBRE -->
 <section id="sobre">
   <div class="sobre-video-container">
     <iframe src="https://drive.google.com/file/d/1R1z6wpipp77nvnz0bgg9lW0u1tXgYrOo/preview" allow="autoplay" allowfullscreen></iframe>
@@ -719,6 +722,7 @@
   </div>
 </section>
 
+<!-- PROJETOS -->
 <section id="projetos">
   <div class="projetos-header">
     <div>
@@ -729,6 +733,7 @@
   </div>
 
   <div class="grid-projetos">
+    <!-- Imagem 1 -->
     <a href="https://neorodrigues.myportfolio.com/gv-solucoes-financeiras" target="_blank" class="projeto-card">
       <img src="imagem1.jpg" alt="GV Soluções Financeiras">
       <div class="projeto-overlay">
@@ -737,6 +742,7 @@
       </div>
     </a>
 
+    <!-- Imagem 2 -->
     <a href="https://neorodrigues.myportfolio.com/animacoes" target="_blank" class="projeto-card">
       <img src="imagem2.jpg" alt="Animações">
       <div class="projeto-overlay">
@@ -745,6 +751,7 @@
       </div>
     </a>
 
+    <!-- Imagem 3 -->
     <a href="https://neppo.com.br/neppo-ia/" target="_blank" class="projeto-card">
       <img src="imagem3.jpg" alt="Landing Page Atendimento com IA">
       <div class="projeto-overlay">
@@ -753,6 +760,7 @@
       </div>
     </a>
 
+    <!-- Imagem 4 -->
     <a href="https://neorodrigues.myportfolio.com/black-friday-neppo-2024" target="_blank" class="projeto-card">
       <img src="imagem4.jpg" alt="Black Friday 2024">
       <div class="projeto-overlay">
@@ -761,6 +769,7 @@
       </div>
     </a>
 
+    <!-- Imagem 5 -->
     <a href="https://neorodrigues.myportfolio.com/comunicacao-interna-neppo" target="_blank" class="projeto-card">
       <img src="imagem5.jpg" alt="Comunicação Interna Neppo">
       <div class="projeto-overlay">
@@ -771,12 +780,14 @@
   </div>
 </section>
 
+<!-- MATERIAIS -->
 <section id="materiais">
   <p class="section-label">Conteúdo</p>
   <h2 class="section-title">Materiais & Apresentações</h2>
 
   <div class="materiais-grid">
 
+    <!-- E-BOOKS -->
     <div class="materiais-col">
       <h3>E-books para download</h3>
       <div class="ebook-list">
@@ -814,6 +825,7 @@
       </div>
     </div>
 
+    <!-- APRESENTAÇÕES EMBEDDADAS -->
     <div class="materiais-col">
       <h3>Apresentações</h3>
       <div class="apresentacoes-list">
@@ -844,6 +856,7 @@
   </div>
 </section>
 
+<!-- HABILIDADES -->
 <section id="habilidades">
   <div class="habilidades-intro">
     <p class="section-label">Skills</p>
@@ -894,6 +907,7 @@
   </div>
 </section>
 
+<!-- CONTATO -->
 <section id="contato">
   <p class="section-label">Contato</p>
   <h2 class="contato-title">Vamos trabalhar juntos?</h2>
