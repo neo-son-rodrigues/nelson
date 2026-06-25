@@ -48,14 +48,16 @@
     background: rgba(13,13,13,0.88);
     backdrop-filter: blur(14px);
     border-bottom: 1px solid var(--border);
+    width: 100%;
   }
 
   .nav-logo img {
-  height: 14px;
-  width: auto;
-  max-width: 120px; /* Isso impede que ela se espalhe para os lados se a imagem original for muito larga */
-  display: block;
-}
+    height: 14px !important;
+    width: auto;
+    max-width: 120px;
+    display: block;
+  }
+
   .nav-links {
     display: flex;
     gap: 2rem;
@@ -80,7 +82,7 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    padding: 0 4rem 5rem;
+    padding: 100px 4rem 5rem; /* Adicionado 100px de espaço no topo para compensar o menu fixo */
     position: relative;
     overflow: hidden;
   }
@@ -625,7 +627,7 @@
   }
 
   footer img { 
-    height: 12px; /* Diminuído de 16px para 12px */
+    height: 12px; 
     width: auto; 
     opacity: 0.5; 
   }
@@ -634,7 +636,7 @@
   @media (max-width: 900px) {
     nav { padding: 1rem 2rem; }
     nav .nav-links { display: none; }
-    #hero { padding: 0 2rem 4rem; }
+    #hero { padding: 100px 2rem 4rem; } /* Ajustado padding mobile também */
     section { padding: 4rem 2rem; }
     #sobre { grid-template-columns: 1fr; gap: 3rem; }
     .sobre-video-container { max-height: 450px; padding-bottom: 56.25%; }
@@ -662,7 +664,8 @@
 
 <nav>
   <a href="#hero">
-    <img src="logo-1.png" alt="Nelson" class="nav-logo">
+    <!-- Forçado atributo html height="14" para garantir redimensionamento instantâneo -->
+    <img src="logo-1.png" alt="Nelson" class="nav-logo" height="14">
   </a>
   <ul class="nav-links">
     <li><a href="#sobre">Sobre</a></li>
@@ -915,7 +918,7 @@
 </section>
 
 <footer>
-  <img src="logo-1.png" alt="Nelson">
+  <img src="logo-1.png" alt="Nelson" height="12">
   <span>© 2026 · Uberlândia, MG · Brasil</span>
 </footer>
 
