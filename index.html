@@ -79,6 +79,16 @@
 
   .nav-links a:hover { color: var(--text); }
 
+  /* Menu Toggle Mobile */
+  .menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text);
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+
   /* HERO */
   #hero {
     min-height: 100vh;
@@ -356,6 +366,43 @@
     font-family: 'Ubuntu', sans-serif;
     font-size: 1.1rem;
     font-weight: 700;
+  }
+
+  /* VÍDEOS */
+  #videos { border-top: 1px solid var(--border); }
+
+  .videos-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  .video-titulo {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.75rem;
+  }
+
+  .video-embed {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%;
+    background: var(--surface2);
+    border-radius: 2px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .video-embed.vertical { padding-bottom: 177.77%; }
+
+  .video-embed iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
   }
 
   /* MATERIAIS */
@@ -638,11 +685,27 @@
   /* RESPONSIVE */
   @media (max-width: 900px) {
     nav { padding: 1rem 2rem; }
-    nav .nav-links { display: none; }
+    .menu-toggle { display: block; }
+    
+    .nav-links { 
+      display: none; 
+      flex-direction: column;
+      position: absolute;
+      top: 100%; left: 0; right: 0;
+      background: rgba(13,13,13,0.95);
+      padding: 2rem;
+      border-bottom: 1px solid var(--border);
+      gap: 1.5rem;
+      text-align: center;
+    }
+    
+    .nav-links.active { display: flex; }
+    
     #hero { padding: 140px 2rem 4rem; } 
     section { padding: 4rem 2rem; }
     #sobre { grid-template-columns: 1fr; gap: 3rem; }
     .sobre-video-container { max-height: 450px; padding-bottom: 56.25%; }
+    .videos-grid { grid-template-columns: 1fr 1fr; }
     #habilidades { grid-template-columns: 1fr; gap: 3rem; }
     .materiais-grid { grid-template-columns: 1fr; }
     .grid-projetos { grid-template-columns: 1fr 1fr; }
@@ -652,7 +715,8 @@
 
   @media (max-width: 600px) {
     .grid-projetos { grid-template-columns: 1fr; }
-    .projeto-card:first-child { grid-column: span 1; }
+    .projeto-card:first-child { grid-column: span 1 !important; aspect-ratio: 4/3; }
+    .videos-grid { grid-template-columns: 1fr; }
     .hero-title { font-size: 3rem; }
     .sobre-stats { grid-template-columns: 1fr 1fr; }
     .skills-grid { grid-template-columns: 1fr; }
@@ -669,9 +733,11 @@
   <a href="#hero">
     <img src="logo-1.png" alt="Nelson" class="nav-logo" height="50">
   </a>
+  <button class="menu-toggle" aria-label="Menu">☰</button>
   <ul class="nav-links">
     <li><a href="#sobre">Sobre</a></li>
     <li><a href="#projetos">Projetos</a></li>
+    <li><a href="#videos">Vídeos</a></li>
     <li><a href="#materiais">Materiais</a></li>
     <li><a href="#habilidades">Habilidades</a></li>
     <li><a href="#contato">Contato</a></li>
@@ -729,7 +795,7 @@
   </div>
 
   <div class="grid-projetos">
-    <a href="https://neorodrigues.myportfolio.com/gv-solucoes-financeiras" target="_blank" class="projeto-card">
+    <a href="https://neorodrigues.myportfolio.com/gv-solucoes-financeiras" target="_blank" rel="noopener" class="projeto-card">
       <img src="imagem1.jpg" alt="GV Soluções Financeiras">
       <div class="projeto-overlay">
         <span class="projeto-categoria">Identidade Visual</span>
@@ -737,7 +803,7 @@
       </div>
     </a>
 
-    <a href="https://neorodrigues.myportfolio.com/animacoes" target="_blank" class="projeto-card">
+    <a href="https://neorodrigues.myportfolio.com/animacoes" target="_blank" rel="noopener" class="projeto-card">
       <img src="imagem2.jpg" alt="Animações">
       <div class="projeto-overlay">
         <span class="projeto-categoria">Motion Design</span>
@@ -745,7 +811,7 @@
       </div>
     </a>
 
-    <a href="https://neppo.com.br/neppo-ia/" target="_blank" class="projeto-card">
+    <a href="https://neppo.com.br/neppo-ia/" target="_blank" rel="noopener" class="projeto-card">
       <img src="imagem3.jpg" alt="Landing Page Atendimento com IA">
       <div class="projeto-overlay">
         <span class="projeto-categoria">Web Design</span>
@@ -753,7 +819,7 @@
       </div>
     </a>
 
-    <a href="https://neorodrigues.myportfolio.com/black-friday-neppo-2024" target="_blank" class="projeto-card">
+    <a href="https://neorodrigues.myportfolio.com/black-friday-neppo-2024" target="_blank" rel="noopener" class="projeto-card">
       <img src="imagem4.jpg" alt="Black Friday 2024">
       <div class="projeto-overlay">
         <span class="projeto-categoria">Campanha Digital</span>
@@ -761,13 +827,64 @@
       </div>
     </a>
 
-    <a href="https://neorodrigues.myportfolio.com/comunicacao-interna-neppo" target="_blank" class="projeto-card">
+    <a href="https://neorodrigues.myportfolio.com/comunicacao-interna-neppo" target="_blank" rel="noopener" class="projeto-card">
       <img src="imagem5.jpg" alt="Comunicação Interna Neppo">
       <div class="projeto-overlay">
         <span class="projeto-categoria">Branding</span>
         <span class="projeto-nome">Comunicação Interna Neppo</span>
       </div>
     </a>
+  </div>
+</section>
+
+<section id="videos">
+  <p class="section-label">Audiovisual</p>
+  <h2 class="section-title">Vídeos & Cases</h2>
+
+  <div class="videos-grid">
+
+    <div class="video-item">
+      <div class="video-titulo">Case Festcolor</div>
+      <div class="video-embed">
+        <iframe src="https://www.youtube.com/embed/KRoBsCdS1cU" title="Case Festcolor" allowfullscreen></iframe>
+      </div>
+    </div>
+
+    <div class="video-item">
+      <div class="video-titulo">Institucional</div>
+      <div class="video-embed">
+        <iframe src="https://www.youtube.com/embed/pqsQIHnyhYU" title="Institucional" allowfullscreen></iframe>
+      </div>
+    </div>
+
+    <div class="video-item">
+      <div class="video-titulo">Neppo Grow</div>
+      <div class="video-embed">
+        <iframe src="https://www.youtube.com/embed/okGZFSGun7w" title="Neppo Grow" allowfullscreen></iframe>
+      </div>
+    </div>
+
+    <div class="video-item">
+      <div class="video-titulo">Experiência Neppo</div>
+      <div class="video-embed">
+        <iframe src="https://www.youtube.com/embed/EUJ-sELLK8o" title="Experiência Neppo" allowfullscreen></iframe>
+      </div>
+    </div>
+
+    <div class="video-item">
+      <div class="video-titulo">Atendimento com WhatsApp</div>
+      <div class="video-embed vertical">
+        <iframe src="https://www.youtube.com/embed/5PaFET6GSh0" title="Atendimento com WhatsApp" allowfullscreen></iframe>
+      </div>
+    </div>
+
+    <div class="video-item">
+      <div class="video-titulo">Fluxo de Chatbot</div>
+      <div class="video-embed vertical">
+        <iframe src="https://www.youtube.com/embed/yqvUnDjyRWM" title="Fluxo de Chatbot" allowfullscreen></iframe>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -781,7 +898,7 @@
       <h3>E-books para download</h3>
       <div class="ebook-list">
 
-        <a href="ebook1.pdf" target="_blank" class="ebook-item">
+        <a href="ebook1.pdf" target="_blank" rel="noopener" class="ebook-item">
           <div class="ebook-info">
             <div class="ebook-titulo">WhatsApp no processo comercial</div>
             <div class="ebook-desc">Meetime ou Neppo</div>
@@ -791,7 +908,7 @@
           </div>
         </a>
 
-        <a href="ebook2.pdf" target="_blank" class="ebook-item">
+        <a href="ebook2.pdf" target="_blank" rel="noopener" class="ebook-item">
           <div class="ebook-info">
             <div class="ebook-titulo">Guia para resgatar leads perdidos</div>
             <div class="ebook-desc">Como transformar "nãos" em vendas</div>
@@ -801,7 +918,7 @@
           </div>
         </a>
 
-        <a href="ebook3.pdf" target="_blank" class="ebook-item">
+        <a href="ebook3.pdf" target="_blank" rel="noopener" class="ebook-item">
           <div class="ebook-info">
             <div class="ebook-titulo">Book de Cultura Neppo</div>
             <div class="ebook-desc">Entenda a Cultura Open to the New!</div>
@@ -900,9 +1017,9 @@
   <p class="contato-sub">Aberto a oportunidades CLT e PJ, presencial em Uberlândia e remoto.</p>
   <a href="mailto:seuemail@email.com" class="email-cta">Enviar e-mail →</a>
   <div class="contato-links">
-    <a href="https://www.linkedin.com/in/neorodrigues/" target="_blank" class="contato-link">LinkedIn ↗</a>
-    <a href="https://neorodrigues.myportfolio.com/" target="_blank" class="contato-link">Portfólio ↗</a>
-    <a href="https://wa.me/5534991719807" target="_blank" class="contato-link">WhatsApp ↗</a>
+    <a href="https://www.linkedin.com/in/neorodrigues/" target="_blank" rel="noopener" class="contato-link">LinkedIn ↗</a>
+    <a href="https://neorodrigues.myportfolio.com/" target="_blank" rel="noopener" class="contato-link">Portfólio ↗</a>
+    <a href="https://wa.me/5534991719807" target="_blank" rel="noopener" class="contato-link">WhatsApp ↗</a>
   </div>
 </section>
 
@@ -911,5 +1028,19 @@
   <span>© 2026 · Uberlândia, MG · Brasil</span>
 </footer>
 
+<script>
+  const menuToggle = document.querySelector('.menu-toggle');
+  const navLinks = document.querySelector('.nav-links');
+
+  menuToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
+  });
+
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('active');
+    });
+  });
+</script>
 </body>
 </html>
