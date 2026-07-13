@@ -1,0 +1,129 @@
+{
+  "map": {
+    "gridWidth": 24,
+    "gridHeight": 16,
+    "tileSize": 32,
+    "spawnPoint": { "x": 12, "y": 14 },
+    "layoutTipo": "planta aberta com imagem de fundo estática (studio_bg.png), salas calibradas pelas coordenadas da arte"
+  },
+  "tema": "Estúdio Alteranelson - planta aberta, sem portas, salas divididas por móveis/tapetes",
+  "salas": [
+    {
+      "id": "sobre",
+      "titulo": "Sobre mim",
+      "ambiente": "Recepção",
+      "decoracao": ["sofá", "quadros na parede", "tapete de boas-vindas"],
+      "icone": "recepcao",
+      "posicaoMapa": { "x": 0, "y": 0 },
+      "size": { "w": 7, "h": 8 },
+      "portaGatilho": { "x": 4, "y": 7 },
+      "conteudo": {
+        "headline": "Criatividade com propósito estratégico",
+        "texto": "Sou designer gráfico e profissional de marketing com mais de 12 anos de experiência. Atuei em projetos de identidade visual, branding, motion design, web design e campanhas de performance — sempre conectando estética e estratégia. Formado em Publicidade e Propaganda pela ESAMC, combino sensibilidade criativa com domínio técnico em ferramentas como Adobe Suite, GA4, Meta Ads e Google Ads.",
+        "stats": [
+          { "numero": "12+", "label": "Anos de experiência" },
+          { "numero": "200+", "label": "Projetos entregues" },
+          { "numero": "5", "label": "Especialidades" },
+          { "numero": "∞", "label": "Café consumido" }
+        ],
+        "videoApresentacao": "https://drive.google.com/file/d/1R1z6wpipp77nvnz0bgg9lW0u1tXgYrOo/preview"
+      }
+    },
+    {
+      "id": "projetos",
+      "titulo": "Projetos selecionados",
+      "ambiente": "Mesa de Design",
+      "decoracao": ["prancheta", "monitor com Illustrator aberto", "mood board na parede"],
+      "icone": "mesa_design",
+      "posicaoMapa": { "x": 8, "y": 2 },
+      "size": { "w": 6, "h": 6 },
+      "portaGatilho": { "x": 11, "y": 7 },
+      "conteudo": {
+        "items": [
+          { "nome": "GV Soluções Financeiras", "categoria": "Identidade Visual", "url": "https://neorodrigues.myportfolio.com/gv-solucoes-financeiras" },
+          { "nome": "Animações", "categoria": "Motion Design", "url": "https://neorodrigues.myportfolio.com/animacoes" },
+          { "nome": "Landing Page Atendimento com IA", "categoria": "Web Design", "url": "https://neppo.com.br/neppo-ia/" },
+          { "nome": "Black Friday 2024", "categoria": "Campanha Digital", "url": "https://neorodrigues.myportfolio.com/black-friday-neppo-2024" },
+          { "nome": "Comunicação Interna Neppo", "categoria": "Branding", "url": "https://neorodrigues.myportfolio.com/comunicacao-interna-neppo" }
+        ]
+      }
+    },
+    {
+      "id": "videos",
+      "titulo": "Vídeos & Cases",
+      "ambiente": "Sala de Edição",
+      "decoracao": ["TV de tubo (foco principal)", "video wall com monitores", "prateleira de fitas VHS decorativas"],
+      "temTV": true,
+      "icone": "sala_edicao",
+      "posicaoMapa": { "x": 14, "y": 2 },
+      "size": { "w": 7, "h": 6 },
+      "portaGatilho": { "x": 17, "y": 7 },
+      "conteudo": {
+        "items": [
+          { "nome": "Case Festcolor", "url": "https://www.youtube.com/embed/KRoBsCdS1cU" },
+          { "nome": "Institucional", "url": "https://www.youtube.com/embed/pqsQIHnyhYU" },
+          { "nome": "Neppo Grow", "url": "https://www.youtube.com/embed/okGZFSGun7w" },
+          { "nome": "Experiência Neppo", "url": "https://www.youtube.com/embed/EUJ-sELLK8o" },
+          { "nome": "Atendimento com WhatsApp", "url": "https://www.youtube.com/embed/5PaFET6GSh0" },
+          { "nome": "Fluxo de Chatbot", "url": "https://www.youtube.com/embed/yqvUnDjyRWM" }
+        ]
+      }
+    },
+    {
+      "id": "materiais",
+      "titulo": "Materiais & Apresentações",
+      "ambiente": "Estante / Arquivo",
+      "decoracao": ["estante de livros/apostilas", "pastas empilhadas", "caixa de arquivo morto"],
+      "icone": "estante",
+      "posicaoMapa": { "x": 21, "y": 0 },
+      "size": { "w": 3, "h": 16 },
+      "portaGatilho": { "x": 22, "y": 8 },
+      "conteudo": {
+        "ebooks": [
+          { "nome": "WhatsApp no processo comercial", "subtitulo": "Meetime ou Neppo", "url": "https://neo-son-rodrigues.github.io/nelson/ebook1.pdf" },
+          { "nome": "Guia para resgatar leads perdidos", "subtitulo": "Como transformar \"nãos\" em vendas", "url": "https://neo-son-rodrigues.github.io/nelson/ebook2.pdf" },
+          { "nome": "Book de Cultura Neppo", "subtitulo": "Entenda a Cultura Open to the New!", "url": "https://neo-son-rodrigues.github.io/nelson/ebook3.pdf" }
+        ],
+        "apresentacoes": [
+          { "nome": "Novas regras do WhatsApp", "tipo": "Google Slides", "url": "https://docs.google.com/presentation/d/e/2PACX-1vTPnWR9rBO9SU5qJoYfHx0fzMgHtTmqk-jyxJZiMhe0DchVOFSv1FZbl7SM9g6lEw/pubembed" },
+          { "nome": "Refresh Marca cVortex", "tipo": "Google Slides", "url": "https://docs.google.com/presentation/d/e/2PACX-1vRZFZfTcNC_G36KybFKh0_AbqCVVTYgk9dqfq3tHcbne6KzU_tkwDG_rIiF2AE8XcQBQBuZc_3nyLDN/pubembed" }
+        ]
+      }
+    },
+    {
+      "id": "skills",
+      "titulo": "O que eu faço",
+      "ambiente": "Estação de Marketing",
+      "decoracao": ["mesa com gráficos/dashboards na parede", "quadro branco com métricas", "monitor com GA4 aberto"],
+      "icone": "estacao_marketing",
+      "posicaoMapa": { "x": 0, "y": 8 },
+      "size": { "w": 7, "h": 8 },
+      "portaGatilho": { "x": 4, "y": 9 },
+      "conteudo": {
+        "categorias": [
+          { "nome": "Design", "itens": ["Identidade Visual", "Branding", "Motion Design", "Web Design", "UI / Diagramação"] },
+          { "nome": "Marketing", "itens": ["Automações de Marketing", "GA4 & Analytics", "E-mail Marketing", "Campanhas Digitais"] },
+          { "nome": "Ferramentas", "itens": ["Adobe Photoshop", "Adobe Illustrator", "After Effects", "Figma", "Elementor / WordPress"] },
+          { "nome": "Dados", "itens": ["Google Search Console", "Hotjar", "ActiveCampaign", "SEO On-page", "UTM & Tracking"] }
+        ]
+      }
+    },
+    {
+      "id": "contato",
+      "titulo": "Vamos trabalhar juntos?",
+      "ambiente": "Sala de Reunião",
+      "decoracao": ["mesa de reunião", "telefone antigo", "quadro escrito \"Vamos conversar?\""],
+      "icone": "sala_reuniao",
+      "posicaoMapa": { "x": 14, "y": 8 },
+      "size": { "w": 7, "h": 8 },
+      "portaGatilho": { "x": 17, "y": 9 },
+      "conteudo": {
+        "texto": "Aberto a oportunidades CLT e PJ, presencial em Uberlândia e remoto.",
+        "email": "mailto:polfit@gmail.com",
+        "linkedin": "https://www.linkedin.com/in/neorodrigues/",
+        "portfolio": "https://neorodrigues.myportfolio.com/",
+        "whatsapp": "https://wa.me/5534991719807"
+      }
+    }
+  ]
+}
