@@ -250,7 +250,6 @@ const DRAW_W = 46, DRAW_H = Math.round(46 * FRAME_H / FRAME_W);
 
 const DIR_ROWS = { frente: 0, costas: 1, lateral_direita: 2, lateral_esquerda: 3 };
 
-// caixa de colisão pequena, ancorada nos pés do personagem (não no sprite inteiro)
 const COLLISION_HW = 11, COLLISION_HH = 7;
 const WALL_MARGIN = 18;
 
@@ -265,7 +264,6 @@ function canMoveTo(nx, ny) {
   return true;
 }
 
-// move tentando cada eixo separadamente, permitindo "deslizar" ao longo de obstáculos
 function moveWithCollision(dx, dy) {
   const nx = player.x + dx;
   if (canMoveTo(nx, player.y)) player.x = nx;
@@ -278,7 +276,7 @@ const player = {
   y: 5 * TILE + TILE/2,
   targetX: null,
   targetY: null,
-  speed: 90, // px/seg
+  speed: 90,
   dir: 'frente',
   frame: 0,
   frameTimer: 0,
@@ -313,7 +311,6 @@ fetch('casinhas.json')
     console.error('Erro carregando casinhas.json', err);
   });
 
-// paleta compartilhada (usada só nos marcadores de interação agora)
 const PAL = {
   screenOn: '#3ec1d3', accent: '#ffd000', black: '#1a1423', white: '#f2ede4'
 };
@@ -324,7 +321,6 @@ function rect(x, y, w, h, color) {
 }
 
 function drawFloor() {
-  // cenário completo: a imagem de fundo já traz piso, paredes e móveis prontos
   if (bgImage.complete && bgImage.naturalWidth > 0) {
     ctx.drawImage(bgImage, 0, 0, canvas.width, canvas.height);
   } else {
@@ -334,6 +330,8 @@ function drawFloor() {
 }
 
 let pulseT = 0;
+let effectTime = 0; // Variável adicionada para os efeitos
+
 function drawRooms() {
   if (!rooms.length) return;
   pulseT += 0.05;
@@ -341,7 +339,6 @@ function drawRooms() {
   rooms.forEach(r => {
     const gxPx = r.gx*TILE + TILE/2;
     const gyPx = r.gy*TILE + TILE/2;
-    // marcador discreto e pulsante indicando o ponto de interação de cada sala
     ctx.globalAlpha = 0.35 + pulse*0.4;
     ctx.fillStyle = PAL.screenOn;
     ctx.beginPath();
@@ -388,7 +385,6 @@ function checkRoomArrival() {
   }
 }
 
-// libera a sala pra poder reabrir depois que o jogador se afasta dela
 function updateActiveRoomProximity() {
   if (!activeRoomId) return;
   const r = rooms.find(rm => rm.id === activeRoomId);
@@ -401,6 +397,8 @@ let lastTime = performance.now();
 function loop(t) {
   const dt = Math.min((t - lastTime) / 1000, 0.05);
   lastTime = t;
+  
+  effectTime = t / 1000; // Conta os segundos para as interações
 
   update(dt);
   render();
@@ -445,7 +443,6 @@ function update(dt) {
       const step = Math.min(player.speed * dt, dist);
       const beforeX = player.x, beforeY = player.y;
       moveWithCollision((dx/dist) * step, (dy/dist) * step);
-      // se travou contra um obstáculo (não andou nada), cancela o alvo pra não ficar "empurrando" parede
       if (Math.hypot(player.x - beforeX, player.y - beforeY) < 0.05) {
         player.targetX = null;
         player.targetY = null;
@@ -470,9 +467,98 @@ function update(dt) {
   }
 }
 
+// Lógica nova de interações calibrada
+function drawInteractions() {
+  if (!rooms.length) return;
+
+  rooms.forEach(r => {
+    const gxPx = r.gx * TILE + TILE / 2;
+    const gyPx = r.gy * TILE + TILE / 2;
+    const dist = Math.hypot(player.x - gxPx, player.y - gyPx);
+
+    if (dist < TILE * 3 && activeRoomId !== r.id) {
+      ctx.save();
+      let ex, ey;
+
+      switch(r.id) {
+        case 'sobre':
+          ex = 128; ey = 175; 
+          ctx.font = '10px "Press Start 2P"';
+          ctx.fillStyle = '#ffd000';
+          ctx.fillText('👩‍💼 Olá!', ex - 25, ey + Math.sin(effectTime * 5) * 4);
+          break;
+
+        case 'projetos':
+          ex = 336; ey = 125;
+          ctx.fillStyle = 'rgba(62, 193, 211, 0.3)';
+          ctx.shadowColor = '#3ec1d3';
+          ctx.shadowBlur = 15;
+          ctx.fillRect(ex - 16, ey - 10, 32, 20);
+          ctx.font = '8px "Press Start 2P"';
+          ctx.fillStyle = '#fff';
+          ctx.shadowBlur = 0;
+          ctx.fillText('</>', ex - 9, ey + 3);
+          break;
+
+        case 'videos':
+          ex = 544; ey = 98;
+          const colors = ['#fff', '#ff0', '#0ff', '#0f0', '#f0f', '#f00', '#00f'];
+          const barW = 4;
+          for(let i = 0; i < colors.length; i++) {
+            ctx.fillStyle = colors[i];
+            ctx.fillRect(ex - 14 + (i * barW), ey - 12, barW, 20);
+          }
+          if (Math.random() > 0.5) {
+            ctx.fillStyle = 'rgba(0,0,0,0.6)';
+            ctx.fillRect(ex - 14, ey - 12, colors.length * barW, 20);
+          }
+          break;
+
+        case 'skills':
+          ex = 144; ey = 270;
+          ctx.strokeStyle = '#ff4d4d';
+          ctx.lineWidth = 3;
+          ctx.lineCap = 'round';
+          ctx.lineJoin = 'round';
+          ctx.beginPath();
+          
+          const progress = (effectTime * 20) % 50;
+          ctx.moveTo(ex - 20, ey + 5);
+          if (progress > 10) ctx.lineTo(ex - 5, ey - 5);
+          if (progress > 20) ctx.lineTo(ex + 10, ey + 2);
+          if (progress > 30) ctx.lineTo(ex + 25, ey - 12);
+          ctx.stroke();
+          break;
+
+        case 'contato':
+          ex = 560; ey = 355;
+          ctx.translate(ex, ey);
+          ctx.rotate(Math.sin(effectTime * 40) * 0.3);
+          ctx.font = '16px Arial';
+          ctx.fillText('☎️', -8, 5);
+          ctx.rotate(0);
+          ctx.font = '12px Arial';
+          ctx.fillStyle = '#ffd000';
+          ctx.fillText('🎵', -15 + Math.cos(effectTime * 10) * 5, -10 - (effectTime * 25 % 15));
+          break;
+
+        case 'materiais':
+          ex = 688; ey = 265;
+          ctx.font = '16px Arial';
+          ctx.fillText('👴', ex - 10, ey);
+          ctx.fillText('📘', ex - 20 + Math.cos(effectTime * 4) * 5, ey + 5 - Math.sin(effectTime * 5) * 8);
+          break;
+      }
+      ctx.restore();
+    }
+  });
+}
+
+// Renderização atualizada com a nova função
 function render() {
   ctx.clearRect(0,0,canvas.width, canvas.height);
   drawFloor();
+  drawInteractions();
   drawRooms();
   drawPlayer();
 }
@@ -484,7 +570,6 @@ canvas.addEventListener('click', (e) => {
   const cx = (e.clientX - rect.left) * scaleX;
   const cy = (e.clientY - rect.top) * scaleY;
 
-  // se clicou numa sala, anda até a porta-gatilho dela; senão anda pro ponto clicado
   const tileX = Math.floor(cx / TILE);
   const tileY = Math.floor(cy / TILE);
   const room = rooms.find(r =>
@@ -512,7 +597,6 @@ window.addEventListener('keyup', (e) => {
   const k = e.key.toLowerCase();
   if (MOVE_KEYS.includes(k)) keysDown[k] = false;
 });
-// segurança: se a aba perder foco no meio do movimento, solta todas as teclas
 window.addEventListener('blur', () => { for (const k in keysDown) keysDown[k] = false; });
 
 /* ---------------- Painel retrô ---------------- */
@@ -600,7 +684,7 @@ function buildTV(videoItems) {
         btn.classList.add('active');
         const screen = document.getElementById('tvScreen');
         screen.classList.remove('powering-on');
-        void screen.offsetWidth; // reflow pra reiniciar animação
+        void screen.offsetWidth; 
         screen.classList.add('powering-on');
         document.getElementById('tvIframe').src = btn.dataset.url;
       });
