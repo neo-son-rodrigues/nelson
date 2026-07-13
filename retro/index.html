@@ -4,211 +4,211 @@
 <meta charset="UTF-8">
 <title>Estúdio Alteranelson</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
-  :root {
-    --bg-dark: #1a1423;
-    --floor: #2b2440;
-    --floor-alt: #342c4d;
-    --accent: #ffd000;
-    --accent-2: #3ec1d3;
-    --panel-bg: #14101f;
-    --panel-border: #ffd000;
-    --text: #f2ede4;
-    --muted: #9b8fb5;
-  }
+  :root {
+    --bg-dark: #1a1423;
+    --floor: #2b2440;
+    --floor-alt: #342c4d;
+    --accent: #ffd000;
+    --accent-2: #3ec1d3;
+    --panel-bg: #14101f;
+    --panel-border: #ffd000;
+    --text: #f2ede4;
+    --muted: #9b8fb5;
+  }
 
-  * { box-sizing: border-box; }
+  * { box-sizing: border-box; }
 
-  body {
-    margin: 0;
-    background: var(--bg-dark);
-    color: var(--text);
-    font-family: 'Press Start 2P', monospace;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    padding: 20px;
-  }
+  body {
+    margin: 0;
+    background: var(--bg-dark);
+    color: var(--text);
+    font-family: 'Press Start 2P', monospace;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
 
-  h1 {
-    font-size: 14px;
-    color: var(--accent);
-    text-shadow: 3px 3px 0 #7a5c00;
-    margin-bottom: 8px;
-    letter-spacing: 1px;
-    text-align: center;
-  }
+  h1 {
+    font-size: 14px;
+    color: var(--accent);
+    text-shadow: 3px 3px 0 #7a5c00;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+    text-align: center;
+  }
 
-  #hint {
-    font-size: 8px;
-    color: var(--muted);
-    margin-bottom: 14px;
-    text-align: center;
-    line-height: 1.8;
-  }
+  #hint {
+    font-size: 8px;
+    color: var(--muted);
+    margin-bottom: 14px;
+    text-align: center;
+    line-height: 1.8;
+  }
 
-  #gameWrap {
-    position: relative;
-    border: 6px solid #000;
-    outline: 3px solid var(--accent);
-    box-shadow: 0 0 0 6px #000, 0 12px 30px rgba(0,0,0,0.6);
-    image-rendering: pixelated;
-  }
+  #gameWrap {
+    position: relative;
+    border: 6px solid #000;
+    outline: 3px solid var(--accent);
+    box-shadow: 0 0 0 6px #000, 0 12px 30px rgba(0,0,0,0.6);
+    image-rendering: pixelated;
+  }
 
-  canvas {
-    display: block;
-    image-rendering: pixelated;
-    background: var(--floor);
-    cursor: crosshair;
-  }
+  canvas {
+    display: block;
+    image-rendering: pixelated;
+    background: var(--floor);
+    cursor: crosshair;
+  }
 
-  /* --- Painel retrô --- */
-  #panelOverlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(10, 6, 20, 0.85);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 50;
-  }
+  /* --- Painel retrô --- */
+  #panelOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 6, 20, 0.85);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+  }
 
-  #panelOverlay.active { display: flex; }
+  #panelOverlay.active { display: flex; }
 
-  #panelBox {
-    width: min(560px, 92vw);
-    max-height: 82vh;
-    overflow-y: auto;
-    background: var(--panel-bg);
-    border: 5px solid var(--panel-border);
-    box-shadow: 0 0 0 4px #000, 0 0 30px rgba(255,208,0,0.25);
-    padding: 20px;
-    position: relative;
-  }
+  #panelBox {
+    width: min(560px, 92vw);
+    max-height: 82vh;
+    overflow-y: auto;
+    background: var(--panel-bg);
+    border: 5px solid var(--panel-border);
+    box-shadow: 0 0 0 4px #000, 0 0 30px rgba(255,208,0,0.25);
+    padding: 20px;
+    position: relative;
+  }
 
-  #panelBox::-webkit-scrollbar { width: 10px; }
-  #panelBox::-webkit-scrollbar-thumb { background: var(--accent); }
-  #panelBox::-webkit-scrollbar-track { background: #000; }
+  #panelBox::-webkit-scrollbar { width: 10px; }
+  #panelBox::-webkit-scrollbar-thumb { background: var(--accent); }
+  #panelBox::-webkit-scrollbar-track { background: #000; }
 
-  #panelClose {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 28px;
-    height: 28px;
-    background: #ff4d4d;
-    border: 3px solid #000;
-    color: #000;
-    font-family: inherit;
-    font-size: 10px;
-    cursor: pointer;
-  }
-  #panelClose:hover { background: #ff8080; }
+  #panelClose {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 28px;
+    height: 28px;
+    background: #ff4d4d;
+    border: 3px solid #000;
+    color: #000;
+    font-family: inherit;
+    font-size: 10px;
+    cursor: pointer;
+  }
+  #panelClose:hover { background: #ff8080; }
 
-  #panelTitle {
-    font-size: 13px;
-    color: var(--accent);
-    margin: 0 0 6px 0;
-    padding-right: 30px;
-  }
-  #panelSub {
-    font-size: 8px;
-    color: var(--accent-2);
-    margin-bottom: 16px;
-  }
-  #panelBody {
-    font-family: 'Courier New', monospace;
-    font-size: 13px;
-    line-height: 1.7;
-    color: var(--text);
-  }
-  #panelBody .stat {
-    display: inline-block;
-    background: #241c38;
-    border: 2px solid var(--accent-2);
-    padding: 6px 10px;
-    margin: 4px 6px 4px 0;
-    font-family: 'Press Start 2P', monospace;
-    font-size: 9px;
-  }
-  #panelBody .stat b { display:block; color: var(--accent); font-size: 12px; margin-bottom:4px;}
-  #panelBody a {
-    color: var(--accent-2);
-    text-decoration: none;
-    border-bottom: 1px dashed var(--accent-2);
-  }
-  #panelBody a:hover { color: var(--accent); border-color: var(--accent); }
-  #panelBody ul { padding-left: 18px; margin: 6px 0 14px; }
-  #panelBody li { margin-bottom: 6px; }
-  #panelBody .item-card {
-    border: 2px solid #3a2f57;
-    padding: 10px 12px;
-    margin-bottom: 10px;
-    background: #1e1830;
-  }
-  #panelBody .item-card .cat {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 7px;
-    color: var(--accent-2);
-    display:block;
-    margin-bottom: 4px;
-  }
+  #panelTitle {
+    font-size: 13px;
+    color: var(--accent);
+    margin: 0 0 6px 0;
+    padding-right: 30px;
+  }
+  #panelSub {
+    font-size: 8px;
+    color: var(--accent-2);
+    margin-bottom: 16px;
+  }
+  #panelBody {
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--text);
+  }
+  #panelBody .stat {
+    display: inline-block;
+    background: #241c38;
+    border: 2px solid var(--accent-2);
+    padding: 6px 10px;
+    margin: 4px 6px 4px 0;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 9px;
+  }
+  #panelBody .stat b { display:block; color: var(--accent); font-size: 12px; margin-bottom:4px;}
+  #panelBody a {
+    color: var(--accent-2);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--accent-2);
+  }
+  #panelBody a:hover { color: var(--accent); border-color: var(--accent); }
+  #panelBody ul { padding-left: 18px; margin: 6px 0 14px; }
+  #panelBody li { margin-bottom: 6px; }
+  #panelBody .item-card {
+    border: 2px solid #3a2f57;
+    padding: 10px 12px;
+    margin-bottom: 10px;
+    background: #1e1830;
+  }
+  #panelBody .item-card .cat {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 7px;
+    color: var(--accent-2);
+    display:block;
+    margin-bottom: 4px;
+  }
 
-  /* --- TV de tubo (só sala de vídeos) --- */
-  #tvWrap {
-    background: #3a3a3a;
-    border-radius: 18px;
-    border: 4px solid #1a1a1a;
-    padding: 16px 16px 26px;
-    margin: 6px 0 14px;
-    position: relative;
-    box-shadow: inset 0 0 20px rgba(0,0,0,0.6), 0 6px 0 #111;
-  }
-  #tvScreen {
-    background: #000;
-    border-radius: 6px;
-    overflow: hidden;
-    position: relative;
-    aspect-ratio: 4/3;
-    border: 3px solid #000;
-  }
-  #tvScreen iframe { width: 100%; height: 100%; border: 0; position: relative; z-index: 1; }
-  #tvScreen .scanline-overlay {
-    position: absolute; inset: 0;
-    background: repeating-linear-gradient(rgba(0,0,0,0) 0px, rgba(0,0,0,0) 2px, rgba(0,0,0,0.15) 3px);
-    pointer-events: none;
-    z-index: 2;
-  }
-  #tvScreen.powering-on {
-    animation: tvOn 0.5s ease-out;
-  }
-  @keyframes tvOn {
-    0% { transform: scaleY(0.01); background:#fff; opacity: 1; }
-    30% { transform: scaleY(0.01); background:#fff; }
-    60% { transform: scaleY(1); background:#000; }
-    100% { transform: scaleY(1); }
-  }
-  #tvControls {
-    display: flex;
-    gap: 6px;
-    margin-top: 10px;
-    flex-wrap: wrap;
-  }
-  .channelBtn {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 7px;
-    background: #241c38;
-    color: var(--text);
-    border: 2px solid var(--accent-2);
-    padding: 6px 8px;
-    cursor: pointer;
-  }
-  .channelBtn:hover, .channelBtn.active { background: var(--accent-2); color:#000; }
-  #tvKnobs { position:absolute; right: 12px; top: 12px; display:flex; gap:6px; }
-  .knob { width:10px; height:10px; border-radius:50%; background:#666; border:2px solid #111; }
+  /* --- TV de tubo (só sala de vídeos) --- */
+  #tvWrap {
+    background: #3a3a3a;
+    border-radius: 18px;
+    border: 4px solid #1a1a1a;
+    padding: 16px 16px 26px;
+    margin: 6px 0 14px;
+    position: relative;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.6), 0 6px 0 #111;
+  }
+  #tvScreen {
+    background: #000;
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+    aspect-ratio: 4/3;
+    border: 3px solid #000;
+  }
+  #tvScreen iframe { width: 100%; height: 100%; border: 0; position: relative; z-index: 1; }
+  #tvScreen .scanline-overlay {
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(rgba(0,0,0,0) 0px, rgba(0,0,0,0) 2px, rgba(0,0,0,0.15) 3px);
+    pointer-events: none;
+    z-index: 2;
+  }
+  #tvScreen.powering-on {
+    animation: tvOn 0.5s ease-out;
+  }
+  @keyframes tvOn {
+    0% { transform: scaleY(0.01); background:#fff; opacity: 1; }
+    30% { transform: scaleY(0.01); background:#fff; }
+    60% { transform: scaleY(1); background:#000; }
+    100% { transform: scaleY(1); }
+  }
+  #tvControls {
+    display: flex;
+    gap: 6px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
+  .channelBtn {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 7px;
+    background: #241c38;
+    color: var(--text);
+    border: 2px solid var(--accent-2);
+    padding: 6px 8px;
+    cursor: pointer;
+  }
+  .channelBtn:hover, .channelBtn.active { background: var(--accent-2); color:#000; }
+  #tvKnobs { position:absolute; right: 12px; top: 12px; display:flex; gap:6px; }
+  .knob { width:10px; height:10px; border-radius:50%; background:#666; border:2px solid #111; }
 </style>
 </head>
 <body>
@@ -217,16 +217,16 @@
 <div id="hint">Clique em uma sala pra o Alteranelson caminhar até lá ▸ setas/WASD também funcionam</div>
 
 <div id="gameWrap">
-  <canvas id="game" width="768" height="512"></canvas>
+  <canvas id="game" width="768" height="512"></canvas>
 </div>
 
 <div id="panelOverlay">
-  <div id="panelBox">
-    <button id="panelClose">X</button>
-    <h2 id="panelTitle"></h2>
-    <div id="panelSub"></div>
-    <div id="panelBody"></div>
-  </div>
+  <div id="panelBox">
+    <button id="panelClose">X</button>
+    <h2 id="panelTitle"></h2>
+    <div id="panelSub"></div>
+    <div id="panelBody"></div>
+  </div>
 </div>
 
 <script>
@@ -250,353 +250,269 @@ const DRAW_W = 46, DRAW_H = Math.round(46 * FRAME_H / FRAME_W);
 
 const DIR_ROWS = { frente: 0, costas: 1, lateral_direita: 2, lateral_esquerda: 3 };
 
+// caixa de colisão pequena, ancorada nos pés do personagem (não no sprite inteiro)
 const COLLISION_HW = 11, COLLISION_HH = 7;
 const WALL_MARGIN = 18;
 
 function canMoveTo(nx, ny) {
-  const left = nx - COLLISION_HW, right = nx + COLLISION_HW;
-  const top = ny - COLLISION_HH, bottom = ny + COLLISION_HH;
-  if (left < WALL_MARGIN || right > canvas.width - WALL_MARGIN ||
-      top < WALL_MARGIN || bottom > canvas.height - WALL_MARGIN) return false;
-  for (const o of obstaclesPx) {
-    if (right > o.x1 && left < o.x2 && bottom > o.y1 && top < o.y2) return false;
-  }
-  return true;
+  const left = nx - COLLISION_HW, right = nx + COLLISION_HW;
+  const top = ny - COLLISION_HH, bottom = ny + COLLISION_HH;
+  if (left < WALL_MARGIN || right > canvas.width - WALL_MARGIN ||
+      top < WALL_MARGIN || bottom > canvas.height - WALL_MARGIN) return false;
+  for (const o of obstaclesPx) {
+    if (right > o.x1 && left < o.x2 && bottom > o.y1 && top < o.y2) return false;
+  }
+  return true;
 }
 
+// move tentando cada eixo separadamente, permitindo "deslizar" ao longo de obstáculos
 function moveWithCollision(dx, dy) {
-  const nx = player.x + dx;
-  if (canMoveTo(nx, player.y)) player.x = nx;
-  const ny = player.y + dy;
-  if (canMoveTo(player.x, ny)) player.y = ny;
+  const nx = player.x + dx;
+  if (canMoveTo(nx, player.y)) player.x = nx;
+  const ny = player.y + dy;
+  if (canMoveTo(player.x, ny)) player.y = ny;
 }
 
 const player = {
-  x: 3 * TILE + TILE/2,
-  y: 5 * TILE + TILE/2,
-  targetX: null,
-  targetY: null,
-  speed: 90,
-  dir: 'frente',
-  frame: 0,
-  frameTimer: 0,
-  moving: false
+  x: 3 * TILE + TILE/2,
+  y: 5 * TILE + TILE/2,
+  targetX: null,
+  targetY: null,
+  speed: 90, // px/seg
+  dir: 'frente',
+  frame: 0,
+  frameTimer: 0,
+  moving: false
 };
 
 let rooms = [];
 let obstaclesPx = [];
 
 fetch('casinhas.json')
-  .then(r => r.json())
-  .then(data => {
-    roomData = data;
-    player.x = data.map.spawnPoint.x * TILE + TILE/2;
-    player.y = data.map.spawnPoint.y * TILE + TILE/2;
-    rooms = data.salas.map(s => ({
-      ...s,
-      px: s.posicaoMapa.x * TILE,
-      py: s.posicaoMapa.y * TILE,
-      pw: s.size.w * TILE,
-      ph: s.size.h * TILE,
-      gx: s.portaGatilho.x,
-      gy: s.portaGatilho.y
-    }));
-    obstaclesPx = (data.map.obstaculos || []).map(o => ({
-      x1: o.x * TILE, y1: o.y * TILE,
-      x2: (o.x + o.w) * TILE, y2: (o.y + o.h) * TILE
-    }));
-    requestAnimationFrame(loop);
-  })
-  .catch(err => {
-    console.error('Erro carregando casinhas.json', err);
-  });
+  .then(r => r.json())
+  .then(data => {
+    roomData = data;
+    player.x = data.map.spawnPoint.x * TILE + TILE/2;
+    player.y = data.map.spawnPoint.y * TILE + TILE/2;
+    rooms = data.salas.map(s => ({
+      ...s,
+      px: s.posicaoMapa.x * TILE,
+      py: s.posicaoMapa.y * TILE,
+      pw: s.size.w * TILE,
+      ph: s.size.h * TILE,
+      gx: s.portaGatilho.x,
+      gy: s.portaGatilho.y
+    }));
+    obstaclesPx = (data.map.obstaculos || []).map(o => ({
+      x1: o.x * TILE, y1: o.y * TILE,
+      x2: (o.x + o.w) * TILE, y2: (o.y + o.h) * TILE
+    }));
+    requestAnimationFrame(loop);
+  })
+  .catch(err => {
+    console.error('Erro carregando casinhas.json', err);
+  });
 
+// paleta compartilhada (usada só nos marcadores de interação agora)
 const PAL = {
-  screenOn: '#3ec1d3', accent: '#ffd000', black: '#1a1423', white: '#f2ede4'
+  screenOn: '#3ec1d3', accent: '#ffd000', black: '#1a1423', white: '#f2ede4'
 };
 
 function rect(x, y, w, h, color) {
-  ctx.fillStyle = color;
-  ctx.fillRect(Math.round(x), Math.round(y), Math.round(w), Math.round(h));
+  ctx.fillStyle = color;
+  ctx.fillRect(Math.round(x), Math.round(y), Math.round(w), Math.round(h));
 }
 
 function drawFloor() {
-  if (bgImage.complete && bgImage.naturalWidth > 0) {
-    ctx.drawImage(bgImage, 0, 0, canvas.width, canvas.height);
-  } else {
-    ctx.fillStyle = '#241c38';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-  }
+  // cenário completo: a imagem de fundo já traz piso, paredes e móveis prontos
+  if (bgImage.complete && bgImage.naturalWidth > 0) {
+    ctx.drawImage(bgImage, 0, 0, canvas.width, canvas.height);
+  } else {
+    ctx.fillStyle = '#241c38';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  }
 }
 
 let pulseT = 0;
-let effectTime = 0; // Variável adicionada para os efeitos
-
 function drawRooms() {
-  if (!rooms.length) return;
-  pulseT += 0.05;
-  const pulse = 0.5 + Math.sin(pulseT) * 0.5;
-  rooms.forEach(r => {
-    const gxPx = r.gx*TILE + TILE/2;
-    const gyPx = r.gy*TILE + TILE/2;
-    ctx.globalAlpha = 0.35 + pulse*0.4;
-    ctx.fillStyle = PAL.screenOn;
-    ctx.beginPath();
-    ctx.arc(gxPx, gyPx, 5 + pulse*2, 0, Math.PI*2);
-    ctx.fill();
-    ctx.globalAlpha = 1;
-  });
+  if (!rooms.length) return;
+  pulseT += 0.05;
+  const pulse = 0.5 + Math.sin(pulseT) * 0.5;
+  rooms.forEach(r => {
+    const gxPx = r.gx*TILE + TILE/2;
+    const gyPx = r.gy*TILE + TILE/2;
+    // marcador discreto e pulsante indicando o ponto de interação de cada sala
+    ctx.globalAlpha = 0.35 + pulse*0.4;
+    ctx.fillStyle = PAL.screenOn;
+    ctx.beginPath();
+    ctx.arc(gxPx, gyPx, 5 + pulse*2, 0, Math.PI*2);
+    ctx.fill();
+    ctx.globalAlpha = 1;
+  });
 }
 
 function drawPlayer() {
-  if (!sprite.complete || sprite.naturalWidth === 0) return;
-  const row = DIR_ROWS[player.dir];
-  const sx = player.frame * FRAME_W;
-  const sy = row * FRAME_H;
-  ctx.drawImage(
-    sprite,
-    sx, sy, FRAME_W, FRAME_H,
-    player.x - DRAW_W/2, player.y - DRAW_H + 6, DRAW_W, DRAW_H
-  );
+  if (!sprite.complete || sprite.naturalWidth === 0) return;
+  const row = DIR_ROWS[player.dir];
+  const sx = player.frame * FRAME_W;
+  const sy = row * FRAME_H;
+  ctx.drawImage(
+    sprite,
+    sx, sy, FRAME_W, FRAME_H,
+    player.x - DRAW_W/2, player.y - DRAW_H + 6, DRAW_W, DRAW_H
+  );
 }
 
 function pickDirection(dx, dy) {
-  if (Math.abs(dx) > Math.abs(dy)) {
-    return dx > 0 ? 'lateral_direita' : 'lateral_esquerda';
-  }
-  return dy > 0 ? 'frente' : 'costas';
+  if (Math.abs(dx) > Math.abs(dy)) {
+    return dx > 0 ? 'lateral_direita' : 'lateral_esquerda';
+  }
+  return dy > 0 ? 'frente' : 'costas';
 }
 
 let activeRoomId = null;
 
 function checkRoomArrival() {
-  if (!rooms.length || overlay.classList.contains('active')) return;
-  for (const r of rooms) {
-    const gxPx = r.gx*TILE + TILE/2;
-    const gyPx = r.gy*TILE + TILE/2;
-    const dist = Math.hypot(player.x - gxPx, player.y - gyPx);
-    if (dist < TILE*0.6 && activeRoomId !== r.id) {
-      activeRoomId = r.id;
-      openPanel(r);
-      player.targetX = null;
-      player.targetY = null;
-      break;
-    }
-  }
+  if (!rooms.length || overlay.classList.contains('active')) return;
+  for (const r of rooms) {
+    const gxPx = r.gx*TILE + TILE/2;
+    const gyPx = r.gy*TILE + TILE/2;
+    const dist = Math.hypot(player.x - gxPx, player.y - gyPx);
+    if (dist < TILE*0.6 && activeRoomId !== r.id) {
+      activeRoomId = r.id;
+      openPanel(r);
+      player.targetX = null;
+      player.targetY = null;
+      break;
+    }
+  }
 }
 
+// libera a sala pra poder reabrir depois que o jogador se afasta dela
 function updateActiveRoomProximity() {
-  if (!activeRoomId) return;
-  const r = rooms.find(rm => rm.id === activeRoomId);
-  if (!r) { activeRoomId = null; return; }
-  const gxPx = r.gx*TILE + TILE/2, gyPx = r.gy*TILE + TILE/2;
-  if (Math.hypot(player.x - gxPx, player.y - gyPx) > TILE*1.4) activeRoomId = null;
+  if (!activeRoomId) return;
+  const r = rooms.find(rm => rm.id === activeRoomId);
+  if (!r) { activeRoomId = null; return; }
+  const gxPx = r.gx*TILE + TILE/2, gyPx = r.gy*TILE + TILE/2;
+  if (Math.hypot(player.x - gxPx, player.y - gyPx) > TILE*1.4) activeRoomId = null;
 }
 
 let lastTime = performance.now();
 function loop(t) {
-  const dt = Math.min((t - lastTime) / 1000, 0.05);
-  lastTime = t;
-  
-  effectTime = t / 1000; // Conta os segundos para as interações
+  const dt = Math.min((t - lastTime) / 1000, 0.05);
+  lastTime = t;
 
-  update(dt);
-  render();
+  update(dt);
+  render();
 
-  requestAnimationFrame(loop);
+  requestAnimationFrame(loop);
 }
 
 const keysDown = {};
 const MOVE_KEYS = ['w','a','s','d','arrowup','arrowdown','arrowleft','arrowright'];
 
 function update(dt) {
-  const up = keysDown['w'] || keysDown['arrowup'];
-  const down = keysDown['s'] || keysDown['arrowdown'];
-  const left = keysDown['a'] || keysDown['arrowleft'];
-  const right = keysDown['d'] || keysDown['arrowright'];
-  let kvx = (right ? 1 : 0) - (left ? 1 : 0);
-  let kvy = (down ? 1 : 0) - (up ? 1 : 0);
-  const usingKeyboard = kvx !== 0 || kvy !== 0;
+  const up = keysDown['w'] || keysDown['arrowup'];
+  const down = keysDown['s'] || keysDown['arrowdown'];
+  const left = keysDown['a'] || keysDown['arrowleft'];
+  const right = keysDown['d'] || keysDown['arrowright'];
+  let kvx = (right ? 1 : 0) - (left ? 1 : 0);
+  let kvy = (down ? 1 : 0) - (up ? 1 : 0);
+  const usingKeyboard = kvx !== 0 || kvy !== 0;
 
-  if (usingKeyboard) {
-    player.targetX = null;
-    player.targetY = null;
-    const len = Math.hypot(kvx, kvy) || 1;
-    kvx /= len; kvy /= len;
-    player.dir = pickDirection(kvx, kvy);
-    moveWithCollision(kvx * player.speed * dt, kvy * player.speed * dt);
-    player.moving = true;
-    checkRoomArrival();
-  } else if (player.targetX !== null) {
-    const dx = player.targetX - player.x;
-    const dy = player.targetY - player.y;
-    const dist = Math.hypot(dx, dy);
+  if (usingKeyboard) {
+    player.targetX = null;
+    player.targetY = null;
+    const len = Math.hypot(kvx, kvy) || 1;
+    kvx /= len; kvy /= len;
+    player.dir = pickDirection(kvx, kvy);
+    moveWithCollision(kvx * player.speed * dt, kvy * player.speed * dt);
+    player.moving = true;
+    checkRoomArrival();
+  } else if (player.targetX !== null) {
+    const dx = player.targetX - player.x;
+    const dy = player.targetY - player.y;
+    const dist = Math.hypot(dx, dy);
 
-    if (dist < 3) {
-      player.targetX = null;
-      player.targetY = null;
-      player.moving = false;
-      checkRoomArrival();
-    } else {
-      player.moving = true;
-      player.dir = pickDirection(dx, dy);
-      const step = Math.min(player.speed * dt, dist);
-      const beforeX = player.x, beforeY = player.y;
-      moveWithCollision((dx/dist) * step, (dy/dist) * step);
-      if (Math.hypot(player.x - beforeX, player.y - beforeY) < 0.05) {
-        player.targetX = null;
-        player.targetY = null;
-        player.moving = false;
-      }
-      checkRoomArrival();
-    }
-  } else {
-    player.moving = false;
-  }
+    if (dist < 3) {
+      player.targetX = null;
+      player.targetY = null;
+      player.moving = false;
+      checkRoomArrival();
+    } else {
+      player.moving = true;
+      player.dir = pickDirection(dx, dy);
+      const step = Math.min(player.speed * dt, dist);
+      const beforeX = player.x, beforeY = player.y;
+      moveWithCollision((dx/dist) * step, (dy/dist) * step);
+      // se travou contra um obstáculo (não andou nada), cancela o alvo pra não ficar "empurrando" parede
+      if (Math.hypot(player.x - beforeX, player.y - beforeY) < 0.05) {
+        player.targetX = null;
+        player.targetY = null;
+        player.moving = false;
+      }
+      checkRoomArrival();
+    }
+  } else {
+    player.moving = false;
+  }
 
-  updateActiveRoomProximity();
+  updateActiveRoomProximity();
 
-  if (player.moving) {
-    player.frameTimer += dt;
-    if (player.frameTimer > 0.14) {
-      player.frameTimer = 0;
-      player.frame = (player.frame + 1) % 4;
-    }
-  } else {
-    player.frame = 0;
-  }
+  if (player.moving) {
+    player.frameTimer += dt;
+    if (player.frameTimer > 0.14) {
+      player.frameTimer = 0;
+      player.frame = (player.frame + 1) % 4;
+    }
+  } else {
+    player.frame = 0;
+  }
 }
 
-// Lógica nova de interações calibrada
-function drawInteractions() {
-  if (!rooms.length) return;
-
-  rooms.forEach(r => {
-    const gxPx = r.gx * TILE + TILE / 2;
-    const gyPx = r.gy * TILE + TILE / 2;
-    const dist = Math.hypot(player.x - gxPx, player.y - gyPx);
-
-    if (dist < TILE * 3 && activeRoomId !== r.id) {
-      ctx.save();
-      let ex, ey;
-
-      switch(r.id) {
-        case 'sobre':
-          ex = 128; ey = 175; 
-          ctx.font = '10px "Press Start 2P"';
-          ctx.fillStyle = '#ffd000';
-          ctx.fillText('👩‍💼 Olá!', ex - 25, ey + Math.sin(effectTime * 5) * 4);
-          break;
-
-        case 'projetos':
-          ex = 336; ey = 125;
-          ctx.fillStyle = 'rgba(62, 193, 211, 0.3)';
-          ctx.shadowColor = '#3ec1d3';
-          ctx.shadowBlur = 15;
-          ctx.fillRect(ex - 16, ey - 10, 32, 20);
-          ctx.font = '8px "Press Start 2P"';
-          ctx.fillStyle = '#fff';
-          ctx.shadowBlur = 0;
-          ctx.fillText('</>', ex - 9, ey + 3);
-          break;
-
-        case 'videos':
-          ex = 544; ey = 98;
-          const colors = ['#fff', '#ff0', '#0ff', '#0f0', '#f0f', '#f00', '#00f'];
-          const barW = 4;
-          for(let i = 0; i < colors.length; i++) {
-            ctx.fillStyle = colors[i];
-            ctx.fillRect(ex - 14 + (i * barW), ey - 12, barW, 20);
-          }
-          if (Math.random() > 0.5) {
-            ctx.fillStyle = 'rgba(0,0,0,0.6)';
-            ctx.fillRect(ex - 14, ey - 12, colors.length * barW, 20);
-          }
-          break;
-
-        case 'skills':
-          ex = 144; ey = 270;
-          ctx.strokeStyle = '#ff4d4d';
-          ctx.lineWidth = 3;
-          ctx.lineCap = 'round';
-          ctx.lineJoin = 'round';
-          ctx.beginPath();
-          
-          const progress = (effectTime * 20) % 50;
-          ctx.moveTo(ex - 20, ey + 5);
-          if (progress > 10) ctx.lineTo(ex - 5, ey - 5);
-          if (progress > 20) ctx.lineTo(ex + 10, ey + 2);
-          if (progress > 30) ctx.lineTo(ex + 25, ey - 12);
-          ctx.stroke();
-          break;
-
-        case 'contato':
-          ex = 560; ey = 355;
-          ctx.translate(ex, ey);
-          ctx.rotate(Math.sin(effectTime * 40) * 0.3);
-          ctx.font = '16px Arial';
-          ctx.fillText('☎️', -8, 5);
-          ctx.rotate(0);
-          ctx.font = '12px Arial';
-          ctx.fillStyle = '#ffd000';
-          ctx.fillText('🎵', -15 + Math.cos(effectTime * 10) * 5, -10 - (effectTime * 25 % 15));
-          break;
-
-        case 'materiais':
-          ex = 688; ey = 265;
-          ctx.font = '16px Arial';
-          ctx.fillText('👴', ex - 10, ey);
-          ctx.fillText('📘', ex - 20 + Math.cos(effectTime * 4) * 5, ey + 5 - Math.sin(effectTime * 5) * 8);
-          break;
-      }
-      ctx.restore();
-    }
-  });
-}
-
-// Renderização atualizada com a nova função
 function render() {
-  ctx.clearRect(0,0,canvas.width, canvas.height);
-  drawFloor();
-  drawInteractions();
-  drawRooms();
-  drawPlayer();
+  ctx.clearRect(0,0,canvas.width, canvas.height);
+  drawFloor();
+  drawRooms();
+  drawPlayer();
 }
 
 canvas.addEventListener('click', (e) => {
-  const rect = canvas.getBoundingClientRect();
-  const scaleX = canvas.width / rect.width;
-  const scaleY = canvas.height / rect.height;
-  const cx = (e.clientX - rect.left) * scaleX;
-  const cy = (e.clientY - rect.top) * scaleY;
+  const rect = canvas.getBoundingClientRect();
+  const scaleX = canvas.width / rect.width;
+  const scaleY = canvas.height / rect.height;
+  const cx = (e.clientX - rect.left) * scaleX;
+  const cy = (e.clientY - rect.top) * scaleY;
 
-  const tileX = Math.floor(cx / TILE);
-  const tileY = Math.floor(cy / TILE);
-  const room = rooms.find(r =>
-    tileX >= r.posicaoMapa.x && tileX < r.posicaoMapa.x + r.size.w &&
-    tileY >= r.posicaoMapa.y && tileY < r.posicaoMapa.y + r.size.h
-  );
+  // se clicou numa sala, anda até a porta-gatilho dela; senão anda pro ponto clicado
+  const tileX = Math.floor(cx / TILE);
+  const tileY = Math.floor(cy / TILE);
+  const room = rooms.find(r =>
+    tileX >= r.posicaoMapa.x && tileX < r.posicaoMapa.x + r.size.w &&
+    tileY >= r.posicaoMapa.y && tileY < r.posicaoMapa.y + r.size.h
+  );
 
-  if (room) {
-    player.targetX = room.gx*TILE + TILE/2;
-    player.targetY = room.gy*TILE + TILE/2;
-  } else {
-    player.targetX = Math.max(TILE/2, Math.min(canvas.width - TILE/2, cx));
-    player.targetY = Math.max(TILE/2, Math.min(canvas.height - TILE/2, cy));
-  }
+  if (room) {
+    player.targetX = room.gx*TILE + TILE/2;
+    player.targetY = room.gy*TILE + TILE/2;
+  } else {
+    player.targetX = Math.max(TILE/2, Math.min(canvas.width - TILE/2, cx));
+    player.targetY = Math.max(TILE/2, Math.min(canvas.height - TILE/2, cy));
+  }
 });
 
 window.addEventListener('keydown', (e) => {
-  const k = e.key.toLowerCase();
-  if (MOVE_KEYS.includes(k)) {
-    keysDown[k] = true;
-    e.preventDefault();
-  }
+  const k = e.key.toLowerCase();
+  if (MOVE_KEYS.includes(k)) {
+    keysDown[k] = true;
+    e.preventDefault();
+  }
 });
 window.addEventListener('keyup', (e) => {
-  const k = e.key.toLowerCase();
-  if (MOVE_KEYS.includes(k)) keysDown[k] = false;
+  const k = e.key.toLowerCase();
+  if (MOVE_KEYS.includes(k)) keysDown[k] = false;
 });
+// segurança: se a aba perder foco no meio do movimento, solta todas as teclas
 window.addEventListener('blur', () => { for (const k in keysDown) keysDown[k] = false; });
 
 /* ---------------- Painel retrô ---------------- */
@@ -609,88 +525,88 @@ overlay.addEventListener('click', (e) => { if (e.target === overlay) closePanel(
 window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closePanel(); });
 
 function closePanel() {
-  overlay.classList.remove('active');
-  panelBody.innerHTML = '';
+  overlay.classList.remove('active');
+  panelBody.innerHTML = '';
 }
 
 function openPanel(room) {
-  panelTitle.textContent = room.titulo;
-  panelSub.textContent = room.ambiente.toUpperCase() + ' · ' + room.decoracao.join(' · ');
-  panelBody.innerHTML = buildContentHTML(room);
-  overlay.classList.add('active');
+  panelTitle.textContent = room.titulo;
+  panelSub.textContent = room.ambiente.toUpperCase() + ' · ' + room.decoracao.join(' · ');
+  panelBody.innerHTML = buildContentHTML(room);
+  overlay.classList.add('active');
 }
 
 function buildContentHTML(room) {
-  const c = room.conteudo;
-  switch (room.id) {
-    case 'sobre':
-      return `
-        <p>${c.texto}</p>
-        <div>${c.stats.map(s => `<span class="stat"><b>${s.numero}</b>${s.label}</span>`).join('')}</div>
-      `;
-    case 'projetos':
-      return `${c.items.map(p => `
-        <div class="item-card">
-          <span class="cat">${p.categoria}</span>
-          <a href="${p.url}" target="_blank" rel="noopener">${p.nome} ↗</a>
-        </div>`).join('')}`;
-    case 'videos':
-      return buildTV(c.items);
-    case 'materiais':
-      return `
-        <p style="color:var(--accent-2); font-family:'Press Start 2P'; font-size:9px;">E-BOOKS</p>
-        ${c.ebooks.map(e => `<div class="item-card"><span class="cat">${e.subtitulo}</span><a href="${e.url}" target="_blank">${e.nome} ↗</a></div>`).join('')}
-        <p style="color:var(--accent-2); font-family:'Press Start 2P'; font-size:9px; margin-top:14px;">APRESENTAÇÕES</p>
-        ${c.apresentacoes.map(a => `<div class="item-card"><span class="cat">${a.tipo}</span><a href="${a.url}" target="_blank">${a.nome} ↗</a></div>`).join('')}
-      `;
-    case 'skills':
-      return c.categorias.map(cat => `
-        <p style="color:var(--accent-2); font-family:'Press Start 2P'; font-size:9px; margin-top:10px;">${cat.nome.toUpperCase()}</p>
-        <ul>${cat.itens.map(i => `<li>${i}</li>`).join('')}</ul>
-      `).join('');
-    case 'contato':
-      return `
-        <p>${c.texto}</p>
-        <ul>
-          <li><a href="${c.email}">✉ E-mail</a></li>
-          <li><a href="${c.linkedin}" target="_blank">in LinkedIn ↗</a></li>
-          <li><a href="${c.portfolio}" target="_blank">Portfólio completo ↗</a></li>
-          <li><a href="${c.whatsapp}" target="_blank">WhatsApp ↗</a></li>
-        </ul>
-      `;
-    default:
-      return '<p>Conteúdo em construção.</p>';
-  }
+  const c = room.conteudo;
+  switch (room.id) {
+    case 'sobre':
+      return `
+        <p>${c.texto}</p>
+        <div>${c.stats.map(s => `<span class="stat"><b>${s.numero}</b>${s.label}</span>`).join('')}</div>
+      `;
+    case 'projetos':
+      return `${c.items.map(p => `
+        <div class="item-card">
+          <span class="cat">${p.categoria}</span>
+          <a href="${p.url}" target="_blank" rel="noopener">${p.nome} ↗</a>
+        </div>`).join('')}`;
+    case 'videos':
+      return buildTV(c.items);
+    case 'materiais':
+      return `
+        <p style="color:var(--accent-2); font-family:'Press Start 2P'; font-size:9px;">E-BOOKS</p>
+        ${c.ebooks.map(e => `<div class="item-card"><span class="cat">${e.subtitulo}</span><a href="${e.url}" target="_blank">${e.nome} ↗</a></div>`).join('')}
+        <p style="color:var(--accent-2); font-family:'Press Start 2P'; font-size:9px; margin-top:14px;">APRESENTAÇÕES</p>
+        ${c.apresentacoes.map(a => `<div class="item-card"><span class="cat">${a.tipo}</span><a href="${a.url}" target="_blank">${a.nome} ↗</a></div>`).join('')}
+      `;
+    case 'skills':
+      return c.categorias.map(cat => `
+        <p style="color:var(--accent-2); font-family:'Press Start 2P'; font-size:9px; margin-top:10px;">${cat.nome.toUpperCase()}</p>
+        <ul>${cat.itens.map(i => `<li>${i}</li>`).join('')}</ul>
+      `).join('');
+    case 'contato':
+      return `
+        <p>${c.texto}</p>
+        <ul>
+          <li><a href="${c.email}">✉ E-mail</a></li>
+          <li><a href="${c.linkedin}" target="_blank">in LinkedIn ↗</a></li>
+          <li><a href="${c.portfolio}" target="_blank">Portfólio completo ↗</a></li>
+          <li><a href="${c.whatsapp}" target="_blank">WhatsApp ↗</a></li>
+        </ul>
+      `;
+    default:
+      return '<p>Conteúdo em construção.</p>';
+  }
 }
 
 function buildTV(videoItems) {
-  const firstUrl = videoItems[0].url;
-  const html = `
-    <div id="tvWrap">
-      <div id="tvKnobs"><div class="knob"></div><div class="knob"></div></div>
-      <div id="tvScreen" class="powering-on">
-        <iframe id="tvIframe" src="${firstUrl}" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-        <div class="scanline-overlay"></div>
-      </div>
-      <div id="tvControls">
-        ${videoItems.map((v,i) => `<button class="channelBtn ${i===0?'active':''}" data-url="${v.url}">CH${i+1} ${v.nome}</button>`).join('')}
-      </div>
-    </div>
-  `;
-  setTimeout(() => {
-    document.querySelectorAll('.channelBtn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.channelBtn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const screen = document.getElementById('tvScreen');
-        screen.classList.remove('powering-on');
-        void screen.offsetWidth; 
-        screen.classList.add('powering-on');
-        document.getElementById('tvIframe').src = btn.dataset.url;
-      });
-    });
-  }, 0);
-  return html;
+  const firstUrl = videoItems[0].url;
+  const html = `
+    <div id="tvWrap">
+      <div id="tvKnobs"><div class="knob"></div><div class="knob"></div></div>
+      <div id="tvScreen" class="powering-on">
+        <iframe id="tvIframe" src="${firstUrl}" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        <div class="scanline-overlay"></div>
+      </div>
+      <div id="tvControls">
+        ${videoItems.map((v,i) => `<button class="channelBtn ${i===0?'active':''}" data-url="${v.url}">CH${i+1} ${v.nome}</button>`).join('')}
+      </div>
+    </div>
+  `;
+  setTimeout(() => {
+    document.querySelectorAll('.channelBtn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.channelBtn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const screen = document.getElementById('tvScreen');
+        screen.classList.remove('powering-on');
+        void screen.offsetWidth; // reflow pra reiniciar animação
+        screen.classList.add('powering-on');
+        document.getElementById('tvIframe').src = btn.dataset.url;
+      });
+    });
+  }, 0);
+  return html;
 }
 </script>
 </body>
