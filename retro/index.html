@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Estúdio Alteranelson</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+  :root {
+    --bg-dark: #1a1423;
+    --floor: #2b2440;
+    --floor-alt: #342c4d;
+    --accent: #ffd000;
+    --accent-2: #3ec1d3;
+    --panel-bg: #14101f;
+    --panel-border: #ffd000;
+    --text: #f2ede4;
+    --muted: #9b8fb5;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg-dark);
+    color: var(--text);
+    font-family: 'Press Start 2P', monospace;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 14px;
+    color: var(--accent);
+    text-shadow: 3px 3px 0 #7a5c00;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+    text-align: center;
+  }
+
+  #hint {
+    font-size: 8px;
+    color: var(--muted);
+    margin-bottom: 14px;
+    text-align: center;
+    line-height: 1.8;
+  }
+
+  #gameWrap {
+    position: relative;
+    border: 6px solid #000;
+    outline: 3px solid var(--accent);
+    box-shadow: 0 0 0 6px #000, 0 12px 30px rgba(0,0,0,0.6);
+    image-rendering: pixelated;
+  }
+
+  canvas {
+    display: block;
+    image-rendering: pixelated;
+    background: var(--floor);
+    cursor: crosshair;
+  }
+
+  /* --- Painel retrô --- */
+  #panelOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 6, 20, 0.85);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+  }
+
+  #panelOverlay.active { display: flex; }
+
+  #panelBox {
+    width: min(560px, 92vw);
+    max-height: 82vh;
+    overflow-y: auto;
+    background: var(--panel-bg);
+    border: 5px solid var(--panel-border);
+    box-shadow: 0 0 0 4px #000, 0 0 30px rgba(255,208,0,0.25);
+    padding: 20px;
+    position: relative;
+  }
+
+  #panelBox::-webkit-scrollbar { width: 10px; }
+  #panelBox::-webkit-scrollbar-thumb { background: var(--accent); }
+  #panelBox::-webkit-scrollbar-track { background: #000; }
+
+  #panelClose {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 28px;
+    height: 28px;
+    background: #ff4d4d;
+    border: 3px solid #000;
+    color: #000;
+    font-family: inherit;
+    font-size: 10px;
+    cursor: pointer;
+  }
+  #panelClose:hover { background: #ff8080; }
+
+  #panelTitle {
+    font-size: 13px;
+    color: var(--accent);
+    margin: 0 0 6px 0;
+    padding-right: 30px;
+  }
+  #panelSub {
+    font-size: 8px;
+    color: var(--accent-2);
+    margin-bottom: 16px;
+  }
+  #panelBody {
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--text);
+  }
+  #panelBody .stat {
+    display: inline-block;
+    background: #241c38;
+    border: 2px solid var(--accent-2);
+    padding: 6px 10px;
+    margin: 4px 6px 4px 0;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 9px;
+  }
+  #panelBody .stat b { display:block; color: var(--accent); font-size: 12px; margin-bottom:4px;}
+  #panelBody a {
+    color: var(--accent-2);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--accent-2);
+  }
+  #panelBody a:hover { color: var(--accent); border-color: var(--accent); }
+  #panelBody ul { padding-left: 18px; margin: 6px 0 14px; }
+  #panelBody li { margin-bottom: 6px; }
+  #panelBody .item-card {
+    border: 2px solid #3a2f57;
+    padding: 10px 12px;
+    margin-bottom: 10px;
+    background: #1e1830;
+  }
+  #panelBody .item-card .cat {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 7px;
+    color: var(--accent-2);
+    display:block;
+    margin-bottom: 4px;
+  }
+
+  /* --- TV de tubo (só sala de vídeos) --- */
+  #tvWrap {
+    background: #3a3a3a;
+    border-radius: 18px;
+    border: 4px solid #1a1a1a;
+    padding: 16px 16px 26px;
+    margin: 6px 0 14px;
+    position: relative;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.6), 0 6px 0 #111;
+  }
+  #tvScreen {
+    background: #000;
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+    aspect-ratio: 4/3;
+    border: 3px solid #000;
+  }
+  #tvScreen iframe { width: 100%; height: 100%; border: 0; position: relative; z-index: 1; }
+  #tvScreen .scanline-overlay {
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(rgba(0,0,0,0) 0px, rgba(0,0,0,0) 2px, rgba(0,0,0,0.15) 3px);
+    pointer-events: none;
+    z-index: 2;
+  }
+  #tvScreen.powering-on {
+    animation: tvOn 0.5s ease-out;
+  }
+  @keyframes tvOn {
+    0% { transform: scaleY(0.01); background:#fff; opacity: 1; }
+    30% { transform: scaleY(0.01); background:#fff; }
+    60% { transform: scaleY(1); background:#000; }
+    100% { transform: scaleY(1); }
+  }
+  #tvControls {
+    display: flex;
+    gap: 6px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
+  .channelBtn {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 7px;
+    background: #241c38;
+    color: var(--text);
+    border: 2px solid var(--accent-2);
+    padding: 6px 8px;
+    cursor: pointer;
+  }
+  .channelBtn:hover, .channelBtn.active { background: var(--accent-2); color:#000; }
+  #tvKnobs { position:absolute; right: 12px; top: 12px; display:flex; gap:6px; }
+  .knob { width:10px; height:10px; border-radius:50%; background:#666; border:2px solid #111; }
+</style>
+</head>
+<body>
+
+<h1>ESTÚDIO ALTERANELSON</h1>
+<div id="hint">Clique em uma sala pra o Alteranelson caminhar até lá ▸ setas/WASD também funcionam</div>
+
+<div id="gameWrap">
+  <canvas id="game" width="640" height="480"></canvas>
+</div>
+
+<div id="panelOverlay">
+  <div id="panelBox">
+    <button id="panelClose">X</button>
+    <h2 id="panelTitle"></h2>
+    <div id="panelSub"></div>
+    <div id="panelBody"></div>
+  </div>
+</div>
+
+<script>
+const TILE = 32;
+const GRID_W = 20;
+const GRID_H = 15;
+
+const canvas = document.getElementById('game');
+const ctx = canvas.getContext('2d');
+ctx.imageSmoothingEnabled = false;
+
+let roomData = null;
+let sprite = new Image();
+sprite.src = 'alteranelson_spritesheet.png';
+
+const FRAME_W = 169, FRAME_H = 243;
+const DRAW_W = 40, DRAW_H = Math.round(40 * FRAME_H / FRAME_W); // escala reduzida pro grid de 32px
+
+const DIR_ROWS = { frente: 0, costas: 1, lateral_direita: 2, lateral_esquerda: 3 };
+
+const player = {
+  x: 3 * TILE + TILE/2,
+  y: 5 * TILE + TILE/2,
+  targetX: null,
+  targetY: null,
+  speed: 90, // px/seg
+  dir: 'frente',
+  frame: 0,
+  frameTimer: 0,
+  moving: false
+};
+
+let rooms = [];
+
+fetch('casinhas.json')
+  .then(r => r.json())
+  .then(data => {
+    roomData = data;
+    player.x = data.map.spawnPoint.x * TILE + TILE/2;
+    player.y = data.map.spawnPoint.y * TILE + TILE/2;
+    rooms = data.salas.map(s => ({
+      ...s,
+      px: s.posicaoMapa.x * TILE,
+      py: s.posicaoMapa.y * TILE,
+      gx: s.portaGatilho.x,
+      gy: s.portaGatilho.y
+    }));
+    requestAnimationFrame(loop);
+  })
+  .catch(err => {
+    console.error('Erro carregando casinhas.json', err);
+  });
+
+const roomColors = {
+  sobre: '#4a3f6b', projetos: '#3f5f6b', videos: '#6b3f4a',
+  materiais: '#5f6b3f', skills: '#6b5a3f', contato: '#4a6b52'
+};
+
+function drawFloor() {
+  for (let y = 0; y < GRID_H; y++) {
+    for (let x = 0; x < GRID_W; x++) {
+      ctx.fillStyle = (x + y) % 2 === 0 ? '#2b2440' : '#302949';
+      ctx.fillRect(x*TILE, y*TILE, TILE, TILE);
+    }
+  }
+}
+
+// paleta compartilhada estilo NES (poucas cores, blocos sólidos)
+const PAL = {
+  rugRecepcao: '#5b3a8f', rugRecepcaoDark: '#4a2e75',
+  rugDesign: '#2f7a8c', rugDesignDark: '#256374',
+  rugEdicao: '#8c2f3f', rugEdicaoDark: '#742533',
+  rugArquivo: '#5f7a2f', rugArquivoDark: '#4c6325',
+  rugMarketing: '#8c6b2f', rugMarketingDark: '#745625',
+  rugReuniao: '#2f8c5f', rugReuniaoDark: '#25744c',
+  wood: '#7a4a2b', woodDark: '#5c3620', woodLight: '#9c6640',
+  metal: '#8a8f99', metalDark: '#5f6470',
+  screenOn: '#3ec1d3', screenGlow: '#a8f0fa',
+  paper: '#e8dfc8', paperDark: '#c9bd9c',
+  black: '#1a1423', white: '#f2ede4', accent: '#ffd000'
+};
+
+function rect(x, y, w, h, color) {
+  ctx.fillStyle = color;
+  ctx.fillRect(Math.round(x), Math.round(y), Math.round(w), Math.round(h));
+}
+
+function drawRoomBase(r, rugColor, rugDark) {
+  const w = 4*TILE, h = 4*TILE;
+  // tapete de área (define o território da sala sem parede)
+  rect(r.px+6, r.py+6, w-12, h-12, rugColor);
+  for (let i = 0; i < w-12; i += 8) rect(r.px+6+i, r.py+6, 4, 2, rugDark);
+  for (let i = 0; i < w-12; i += 8) rect(r.px+6+i, r.py+h-8, 4, 2, rugDark);
+  // label da sala
+  ctx.fillStyle = PAL.accent;
+  ctx.font = '7px monospace';
+  ctx.fillText(r.ambiente.toUpperCase(), r.px + 8, r.py + 16);
+}
+
+function drawRecepcao(r) {
+  drawRoomBase(r, PAL.rugRecepcao, PAL.rugRecepcaoDark);
+  const bx = r.px + 20, by = r.py + 60;
+  // sofá
+  rect(bx, by, 70, 30, PAL.wood);
+  rect(bx, by, 70, 8, PAL.woodLight);
+  rect(bx-4, by+6, 8, 24, PAL.woodDark);
+  rect(bx+66, by+6, 8, 24, PAL.woodDark);
+  rect(bx+6, by+8, 58, 16, '#c9432f');
+  rect(bx+6, by+8, 58, 4, '#e05a44');
+  // quadros na parede (topo da sala)
+  rect(r.px+20, r.py+16, 16, 20, PAL.woodDark);
+  rect(r.px+24, r.py+20, 8, 12, PAL.screenOn);
+  rect(r.px+50, r.py+16, 16, 20, PAL.woodDark);
+  rect(r.px+54, r.py+20, 8, 12, PAL.accent);
+}
+
+function drawMesaDesign(r) {
+  drawRoomBase(r, PAL.rugDesign, PAL.rugDesignDark);
+  const bx = r.px + 24, by = r.py + 50;
+  // prancheta inclinada
+  rect(bx, by, 60, 40, PAL.wood);
+  rect(bx, by, 60, 6, PAL.woodLight);
+  rect(bx+4, by+8, 52, 26, PAL.paper);
+  rect(bx+8, by+12, 20, 4, PAL.rugDesignDark);
+  rect(bx+8, by+18, 30, 3, PAL.rugDesignDark);
+  rect(bx+8, by+23, 14, 3, PAL.rugDesignDark);
+  // pernas
+  rect(bx+2, by+40, 4, 16, PAL.woodDark);
+  rect(bx+54, by+40, 4, 16, PAL.woodDark);
+  // monitor com "illustrator" aberto
+  rect(r.px+22, r.py+14, 34, 24, PAL.metalDark);
+  rect(r.px+25, r.py+17, 28, 18, PAL.screenOn);
+  rect(r.px+29, r.py+21, 8, 10, PAL.accent);
+  rect(r.px+39, r.py+23, 10, 6, PAL.white);
+}
+
+function drawSalaEdicao(r) {
+  drawRoomBase(r, PAL.rugEdicao, PAL.rugEdicaoDark);
+  const bx = r.px + 30, by = r.py + 40;
+  // TV de tubo (mini, decorativa - a de verdade abre no painel)
+  rect(bx, by, 50, 40, PAL.metal);
+  rect(bx+4, by+4, 42, 26, PAL.black);
+  rect(bx+6, by+6, 38, 22, PAL.screenOn);
+  rect(bx+44, by+32, 4, 4, PAL.accent);
+  rect(bx+20, by+40, 10, 6, PAL.metalDark);
+  // prateleira de fitas VHS
+  rect(r.px+18, r.py+100, 92, 14, PAL.woodDark);
+  for (let i = 0; i < 10; i++) {
+    rect(r.px+20+i*9, r.py+88, 7, 12, i % 2 === 0 ? '#3a2f57' : '#57492f');
+  }
+}
+
+function drawEstante(r) {
+  drawRoomBase(r, PAL.rugArquivo, PAL.rugArquivoDark);
+  const bx = r.px + 14, by = r.py + 16;
+  // estante grande
+  rect(bx, by, 100, 70, PAL.woodDark);
+  for (let row = 0; row < 3; row++) {
+    rect(bx+4, by+4+row*23, 92, 18, PAL.wood);
+    for (let i = 0; i < 8; i++) {
+      const colors = ['#c9432f', '#3ec1d3', '#ffd000', '#5f7a2f', '#8c2f3f'];
+      rect(bx+8+i*11, by+6+row*23, 8, 14, colors[i % colors.length]);
+    }
+  }
+  // caixas de arquivo empilhadas embaixo
+  rect(r.px+20, r.py+96, 26, 20, PAL.paper);
+  rect(r.px+20, r.py+96, 26, 6, PAL.paperDark);
+  rect(r.px+52, r.py+100, 26, 16, PAL.paper);
+  rect(r.px+52, r.py+100, 26, 6, PAL.paperDark);
+}
+
+function drawEstacaoMarketing(r) {
+  drawRoomBase(r, PAL.rugMarketing, PAL.rugMarketingDark);
+  const bx = r.px + 20, by = r.py + 60;
+  // mesa
+  rect(bx, by, 80, 8, PAL.wood);
+  rect(bx+4, by+8, 6, 24, PAL.woodDark);
+  rect(bx+70, by+8, 6, 24, PAL.woodDark);
+  // monitor com gráfico
+  rect(bx+16, by-26, 40, 26, PAL.metalDark);
+  rect(bx+19, by-23, 34, 20, PAL.black);
+  rect(bx+22, by-8, 4, 5, PAL.screenOn);
+  rect(bx+27, by-12, 4, 9, PAL.accent);
+  rect(bx+32, by-6, 4, 3, PAL.screenOn);
+  rect(bx+37, by-16, 4, 13, PAL.accent);
+  rect(bx+42, by-10, 4, 7, PAL.screenOn);
+  // quadro branco com métricas
+  rect(r.px+16, r.py+14, 40, 26, PAL.white);
+  rect(r.px+16, r.py+14, 40, 4, PAL.metal);
+  ctx.strokeStyle = '#2f7a8c'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(r.px+20, r.py+34); ctx.lineTo(r.px+30, r.py+22); ctx.lineTo(r.px+38, r.py+28); ctx.lineTo(r.px+52, r.py+18); ctx.stroke();
+}
+
+function drawSalaReuniao(r) {
+  drawRoomBase(r, PAL.rugReuniao, PAL.rugReuniaoDark);
+  const bx = r.px + 20, by = r.py + 50;
+  // mesa de reunião oval
+  rect(bx, by, 90, 34, PAL.wood);
+  rect(bx+4, by+3, 82, 6, PAL.woodLight);
+  rect(bx-2, by+30, 8, 16, PAL.woodDark);
+  rect(bx+84, by+30, 8, 16, PAL.woodDark);
+  // telefone antigo
+  rect(bx+38, by+8, 16, 10, PAL.black);
+  rect(bx+42, by+4, 8, 6, PAL.black);
+  // quadro "vamos conversar?"
+  rect(r.px+70, r.py+14, 42, 22, PAL.white);
+  ctx.fillStyle = PAL.black;
+  ctx.font = '5px monospace';
+  ctx.fillText('VAMOS', r.px+76, r.py+24);
+  ctx.fillText('CONVERSAR?', r.px+74, r.py+31);
+}
+
+const roomDrawers = {
+  sobre: drawRecepcao,
+  projetos: drawMesaDesign,
+  videos: drawSalaEdicao,
+  materiais: drawEstante,
+  skills: drawEstacaoMarketing,
+  contato: drawSalaReuniao
+};
+
+function drawRooms() {
+  if (!rooms.length) return;
+  rooms.forEach(r => {
+    const drawer = roomDrawers[r.id];
+    if (drawer) drawer(r);
+
+    // porta gatilho marker (pisca sutil, indica onde clicar/chegar)
+    ctx.fillStyle = PAL.screenOn;
+    ctx.fillRect(r.gx*TILE + TILE/2 - 3, r.gy*TILE + TILE/2 - 3, 6, 6);
+  });
+}
+
+function drawPlayer() {
+  if (!sprite.complete || sprite.naturalWidth === 0) return;
+  const row = DIR_ROWS[player.dir];
+  const sx = player.frame * FRAME_W;
+  const sy = row * FRAME_H;
+  ctx.drawImage(
+    sprite,
+    sx, sy, FRAME_W, FRAME_H,
+    player.x - DRAW_W/2, player.y - DRAW_H + 6, DRAW_W, DRAW_H
+  );
+}
+
+function pickDirection(dx, dy) {
+  if (Math.abs(dx) > Math.abs(dy)) {
+    return dx > 0 ? 'lateral_direita' : 'lateral_esquerda';
+  }
+  return dy > 0 ? 'frente' : 'costas';
+}
+
+function checkRoomArrival() {
+  if (!rooms.length) return;
+  for (const r of rooms) {
+    const gxPx = r.gx*TILE + TILE/2;
+    const gyPx = r.gy*TILE + TILE/2;
+    const dist = Math.hypot(player.x - gxPx, player.y - gyPx);
+    if (dist < TILE*0.6) {
+      openPanel(r);
+      player.targetX = null;
+      player.targetY = null;
+      break;
+    }
+  }
+}
+
+let lastTime = performance.now();
+function loop(t) {
+  const dt = Math.min((t - lastTime) / 1000, 0.05);
+  lastTime = t;
+
+  update(dt);
+  render();
+
+  requestAnimationFrame(loop);
+}
+
+function update(dt) {
+  if (player.targetX !== null) {
+    const dx = player.targetX - player.x;
+    const dy = player.targetY - player.y;
+    const dist = Math.hypot(dx, dy);
+
+    if (dist < 3) {
+      player.x = player.targetX;
+      player.y = player.targetY;
+      player.targetX = null;
+      player.targetY = null;
+      player.moving = false;
+      checkRoomArrival();
+    } else {
+      player.moving = true;
+      player.dir = pickDirection(dx, dy);
+      const step = player.speed * dt;
+      player.x += (dx/dist) * Math.min(step, dist);
+      player.y += (dy/dist) * Math.min(step, dist);
+    }
+  } else {
+    player.moving = false;
+  }
+
+  if (player.moving) {
+    player.frameTimer += dt;
+    if (player.frameTimer > 0.14) {
+      player.frameTimer = 0;
+      player.frame = (player.frame + 1) % 4;
+    }
+  } else {
+    player.frame = 0;
+  }
+}
+
+function render() {
+  ctx.clearRect(0,0,canvas.width, canvas.height);
+  drawFloor();
+  drawRooms();
+  drawPlayer();
+}
+
+canvas.addEventListener('click', (e) => {
+  const rect = canvas.getBoundingClientRect();
+  const scaleX = canvas.width / rect.width;
+  const scaleY = canvas.height / rect.height;
+  const cx = (e.clientX - rect.left) * scaleX;
+  const cy = (e.clientY - rect.top) * scaleY;
+
+  // se clicou numa sala, anda até a porta-gatilho dela; senão anda pro ponto clicado
+  const tileX = Math.floor(cx / TILE);
+  const tileY = Math.floor(cy / TILE);
+  const room = rooms.find(r =>
+    tileX >= r.posicaoMapa.x && tileX < r.posicaoMapa.x + 4 &&
+    tileY >= r.posicaoMapa.y && tileY < r.posicaoMapa.y + 4
+  );
+
+  if (room) {
+    player.targetX = room.gx*TILE + TILE/2;
+    player.targetY = room.gy*TILE + TILE/2;
+  } else {
+    player.targetX = Math.max(TILE/2, Math.min(canvas.width - TILE/2, cx));
+    player.targetY = Math.max(TILE/2, Math.min(canvas.height - TILE/2, cy));
+  }
+});
+
+const KEY_MOVE = { ArrowUp:[0,-1], ArrowDown:[0,1], ArrowLeft:[-1,0], ArrowRight:[1,0],
+                    w:[0,-1], s:[0,1], a:[-1,0], d:[1,0] };
+window.addEventListener('keydown', (e) => {
+  const mv = KEY_MOVE[e.key];
+  if (!mv) return;
+  player.targetX = player.x + mv[0]*TILE*3;
+  player.targetY = player.y + mv[1]*TILE*3;
+});
+
+/* ---------------- Painel retrô ---------------- */
+const overlay = document.getElementById('panelOverlay');
+const panelTitle = document.getElementById('panelTitle');
+const panelSub = document.getElementById('panelSub');
+const panelBody = document.getElementById('panelBody');
+document.getElementById('panelClose').addEventListener('click', closePanel);
+overlay.addEventListener('click', (e) => { if (e.target === overlay) closePanel(); });
+window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closePanel(); });
+
+function closePanel() {
+  overlay.classList.remove('active');
+  panelBody.innerHTML = '';
+}
+
+function openPanel(room) {
+  panelTitle.textContent = room.titulo;
+  panelSub.textContent = room.ambiente.toUpperCase() + ' · ' + room.decoracao.join(' · ');
+  panelBody.innerHTML = buildContentHTML(room);
+  overlay.classList.add('active');
+}
+
+function buildContentHTML(room) {
+  const c = room.conteudo;
+  switch (room.id) {
+    case 'sobre':
+      return `
+        <p>${c.texto}</p>
+        <div>${c.stats.map(s => `<span class="stat"><b>${s.numero}</b>${s.label}</span>`).join('')}</div>
+      `;
+    case 'projetos':
+      return `${c.items.map(p => `
+        <div class="item-card">
+          <span class="cat">${p.categoria}</span>
+          <a href="${p.url}" target="_blank" rel="noopener">${p.nome} ↗</a>
+        </div>`).join('')}`;
+    case 'videos':
+      return buildTV(c.items);
+    case 'materiais':
+      return `
+        <p style="color:var(--accent-2); font-family:'Press Start 2P'; font-size:9px;">E-BOOKS</p>
+        ${c.ebooks.map(e => `<div class="item-card"><span class="cat">${e.subtitulo}</span><a href="${e.url}" target="_blank">${e.nome} ↗</a></div>`).join('')}
+        <p style="color:var(--accent-2); font-family:'Press Start 2P'; font-size:9px; margin-top:14px;">APRESENTAÇÕES</p>
+        ${c.apresentacoes.map(a => `<div class="item-card"><span class="cat">${a.tipo}</span><a href="${a.url}" target="_blank">${a.nome} ↗</a></div>`).join('')}
+      `;
+    case 'skills':
+      return c.categorias.map(cat => `
+        <p style="color:var(--accent-2); font-family:'Press Start 2P'; font-size:9px; margin-top:10px;">${cat.nome.toUpperCase()}</p>
+        <ul>${cat.itens.map(i => `<li>${i}</li>`).join('')}</ul>
+      `).join('');
+    case 'contato':
+      return `
+        <p>${c.texto}</p>
+        <ul>
+          <li><a href="${c.email}">✉ E-mail</a></li>
+          <li><a href="${c.linkedin}" target="_blank">in LinkedIn ↗</a></li>
+          <li><a href="${c.portfolio}" target="_blank">Portfólio completo ↗</a></li>
+          <li><a href="${c.whatsapp}" target="_blank">WhatsApp ↗</a></li>
+        </ul>
+      `;
+    default:
+      return '<p>Conteúdo em construção.</p>';
+  }
+}
+
+function buildTV(videoItems) {
+  const firstUrl = videoItems[0].url;
+  const html = `
+    <div id="tvWrap">
+      <div id="tvKnobs"><div class="knob"></div><div class="knob"></div></div>
+      <div id="tvScreen" class="powering-on">
+        <iframe id="tvIframe" src="${firstUrl}" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        <div class="scanline-overlay"></div>
+      </div>
+      <div id="tvControls">
+        ${videoItems.map((v,i) => `<button class="channelBtn ${i===0?'active':''}" data-url="${v.url}">CH${i+1} ${v.nome}</button>`).join('')}
+      </div>
+    </div>
+  `;
+  setTimeout(() => {
+    document.querySelectorAll('.channelBtn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.channelBtn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const screen = document.getElementById('tvScreen');
+        screen.classList.remove('powering-on');
+        void screen.offsetWidth; // reflow pra reiniciar animação
+        screen.classList.add('powering-on');
+        document.getElementById('tvIframe').src = btn.dataset.url;
+      });
+    });
+  }, 0);
+  return html;
+}
+</script>
+</body>
+</html>
