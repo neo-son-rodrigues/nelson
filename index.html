@@ -682,6 +682,16 @@
     opacity: 0.5; 
   }
 
+  /* LINK MODO RETRÔ (dentro do menu) */
+  .nav-links a.retro-link {
+    color: var(--accent);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .nav-links a.retro-link:hover { color: var(--text); }
+
   /* RESPONSIVE */
   @media (max-width: 900px) {
     nav { padding: 1rem 2rem; }
@@ -741,6 +751,7 @@
     <li><a href="#materiais">Materiais</a></li>
     <li><a href="#habilidades">Habilidades</a></li>
     <li><a href="#contato">Contato</a></li>
+    <li><a href="retro/" class="retro-link">🕹️ Modo Retrô</a></li>
   </ul>
 </nav>
 
@@ -1015,7 +1026,7 @@
   <p class="section-label">Contato</p>
   <h2 class="contato-title">Vamos trabalhar juntos?</h2>
   <p class="contato-sub">Aberto a oportunidades CLT e PJ, presencial em Uberlândia e remoto.</p>
-  <a href="mailto:seuemail@email.com" class="email-cta">Enviar e-mail →</a>
+  <a href="mailto:polfit@gmail.com" class="email-cta">Enviar e-mail →</a>
   <div class="contato-links">
     <a href="https://www.linkedin.com/in/neorodrigues/" target="_blank" rel="noopener" class="contato-link">LinkedIn ↗</a>
     <a href="https://neorodrigues.myportfolio.com/" target="_blank" rel="noopener" class="contato-link">Portfólio ↗</a>
